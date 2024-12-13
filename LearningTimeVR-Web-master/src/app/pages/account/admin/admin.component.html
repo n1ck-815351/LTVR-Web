@@ -1,0 +1,81 @@
+<style>
+    *.expired {
+        color: red !important;
+    }
+
+    .expiredText {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+    }
+</style>
+
+
+<div *ngIf="userService.user && userService.fbUser" class="container my-5">
+
+    <!-- Help and Info Text -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <app-ascentxr-admin-content
+                    *ngIf="userService.user.baseUser!.organizationId == ascentOrg"></app-ascentxr-admin-content>
+                <app-user-admin-admin-content
+                    *ngIf="userService.user.baseUser!.organizationId != ascentOrg"></app-user-admin-admin-content>
+            </div>
+
+        </div>
+        <div class="row">
+            <span class="material-symbols-outlined btn" data-bs-toggle="collapse"
+                data-bs-target="#AdminInformationCollapse" aria-expanded="false"
+                aria-controls="userAdminContentCollapse" (click)="isExpanded = !isExpanded">
+                {{isExpanded ? 'expand_less' : 'question_mark'}}
+            </span>
+        </div>
+    </div>
+
+    <div class="row" style="margin-bottom:30px;">
+        <div class="col mx-auto">
+            <!-- {{global.adminPage_activeUserView}} -->
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link btn" [class.active]="global.adminPage_activeTab === 'linkGenerator'"
+                        (click)="global.adminPage_activeTab = 'linkGenerator'">Link
+                        Generator</a>
+                </li>
+                <li class="nav-item" *ngIf="userService.user.baseUser!.organizationId === ascentOrg">
+                    <a class="nav-link btn" [class.active]="global.adminPage_activeTab === 'organization'"
+                        (click)="global.adminPage_activeTab = 'organization'">Organization Manager</a>
+                </li>
+                <li class="nav-item" *ngIf="userService.user.baseUser!.organizationId === ascentOrg">
+                    <a class="nav-link btn" [class.active]="global.adminPage_activeTab === 'userManager'"
+                        (click)="global.adminPage_activeTab = 'userManager'">User Manager</a>
+                </li>
+                <li class="nav-item" *ngIf="userService.user.baseUser!.organizationId === ascentOrg">
+                    <a class="nav-link btn" [class.active]="global.adminPage_activeTab === 'deviceManager'"
+                        (click)="global.adminPage_activeTab = 'deviceManager'">Device Manager</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col mx-auto">
+            <div
+                *ngIf="global.adminPage_activeTab === 'organization' && userService.user.baseUser!.organizationId === ascentOrg">
+                <app-organization-manager *ngIf="userService.user?.baseUser"></app-organization-manager>
+            </div>
+            <div *ngIf="global.adminPage_activeTab === 'linkGenerator'">
+                <app-link-generator *ngIf="userService.user?.baseUser"></app-link-generator>
+            </div>
+            <div *ngIf="global.adminPage_activeTab === 'userManager'">
+                <app-admin-user-page *ngIf="userService.user?.baseUser"></app-admin-user-page>
+            </div>
+            <div *ngIf="global.adminPage_activeTab === 'deviceManager'">
+                <app-device-manager></app-device-manager>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

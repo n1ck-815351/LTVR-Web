@@ -1,0 +1,39 @@
+@import url('../../../../../style/styles.scss');
+@import url('../../../../../style/buttons.scss');
+
+.card-content {
+    background-color: #3a60d0;
+
+    
+    background: linear-gradient(#4e73df, #334c95);
+    -webkit-background: linear-gradient(#4e73df, #334c95);
+    transition: all linear .5s;
+    display: inline-block; 
+    width: 250px; 
+    margin: 2em; 
+    border-radius: 5px; 
+    border: solid 2px #e6e6e6; 
+}
+
+.card-content:hover {
+    background-color: #2847A4;
+    background: linear-gradient(#2847A4, #4e73df);
+    -webkit-background: linear-gradient(#2847A4, #4e73df);
+    box-shadow: 0 3px 25px #000;
+}
+
+.button-primary_action, .button-primary_critical {
+    color: black;
+    cursor: pointer;
+    transition: color ease-in-out .25s;
+}
+
+.button-primary_action:hover {
+    color: #e6e6e6;
+    cursor: pointer;
+}
+
+.button-primary_critical:hover {
+    color: #960e0e;
+    cursor: pointer;
+}

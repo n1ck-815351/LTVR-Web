@@ -1,0 +1,9 @@
+
+<div id="breadcrumb">
+    <h2 style="padding-left: 1rem;">
+        <div class="d-flex flex-row" >
+            <span (click)="onButtonClick(crumb.url)" *ngFor="let crumb of this.breadcrumbs">{{crumb.title}} >&nbsp;</span>
+            <span>{{this.currentPage}}</span>
+        </div>
+    </h2>
+</div>

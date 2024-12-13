@@ -1,0 +1,65 @@
+<div class="card">
+    <div class="card-header">
+        Organizations
+    </div>
+    <div class="card-body">
+
+        <div class="mb-3">
+            <label for="orgTitle" class="form-label">Title</label>
+            <input type="text" class="form-control" id="orgTitle" [(ngModel)]="orgTitle"
+                placeholder="Example Organization Name">
+        </div>
+        <div class="mb-3">
+            <label for="orgDesc" class="form-label">Description</label>
+            <input type="text" class="form-control" id="orgDesc" [(ngModel)]="orgDesc"
+                placeholder="Example Organization Name">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Schools</label>
+            <div class="input-group mb-3" *ngFor="let school of schools; let i = index">
+                <input type="text" class="form-control" placeholder="School name" [value]="school.name"
+                    (input)="updateSchoolName(i, $event)">
+                <!-- <button class="btn btn-danger" type="button" (click)="removeSchool(i)">Remove</button> -->
+                <button *ngIf="schools.length > 1" class="btn btn-danger" type="button"
+                    (click)="removeSchool(i)">Remove</button>
+            </div>
+            <button class="btn btn-primary" type="button" (click)="addSchool()">Add School</button>
+        </div>
+
+        <div class="row">
+            <button class="btn btn-primary ml-auto" (click)="pushOrgToDB()"
+                [disabled]="validateOrgCreator()">Create</button>
+        </div>
+        <hr>
+        <div *ngIf="orgService.collection && orgService.collection.length > 0">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Schools</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let org of orgService.collection" class=" align-items-center">
+                        
+                        <td>{{org.title}}</td>
+                        <td>{{org.description}}</td>
+                        <td style="text-align:center;">{{org.schools.length}}</td>
+                        <td><span class="btn btn-info" (click)="startEditOrg(org);">Edit</span></td>
+
+                        <!--                         
+                        <td *ngIf="org == orgToEdit"><textarea class="form-control" style="width:100%;" type="text" [value]="org.title"></textarea></td>
+                        <td *ngIf="org == orgToEdit"><textarea class="form-control" style="width:100%;" type="text" [value]="org.description"></textarea></td>
+                        <td *ngIf="org == orgToEdit" style="text-align:center;">Schools: {{org.schools.length}}</td>
+                        <td *ngIf="org == orgToEdit"><span class="btn btn-info" (click)="saveEditOrg(org);">Save</span></td>
+                        <td *ngIf="org == orgToEdit"><span class="btn btn-info" (click)="saveEditOrg(org);">Save</span></td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

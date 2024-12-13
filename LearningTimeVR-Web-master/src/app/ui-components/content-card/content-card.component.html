@@ -1,0 +1,43 @@
+<!--Not separating these components as only one will remain after design decisions are finalized-->
+
+<!--Simple Component | Style 1: displayed when component controls (edit, delete) are hidden-->
+<div *ngIf="!displayElementControls;" ngbTooltip="{{title}}" class="card-content_container1">
+    <div class="card-content_description1" (click)="onActionClick();">
+        <div *ngIf="this.title" class="card-title1">
+            {{title}}
+        </div>
+        <div *ngIf="this.lastVisited" class="card-subtext1">
+            <i>Last Visited: {{lastVisited}}</i>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!displayElementControls && displayLTVRDemoBadge()" class="card-circle" style="text-align:center">
+    <div class="card-circle_inner">
+        <span class="card-circle_l">L</span>
+        <span class="card-circle_t">T</span>
+    </div>
+</div>
+
+<!--Dual Section Component | Style 2-->
+<div *ngIf="displayElementControls;" class="card-content_container rounded"
+    ngbTooltip="{{title}}">
+    
+    <div class="card-content_description" (click)="onActionClick()">
+        {{description}}
+    </div>
+    <div class="card-content_title d-flex f align-self-center justify-content-center pt-3">
+        <div *ngIf="this.title" class="p-3 card-title">
+            <b>{{title}}</b>
+        </div>
+        <app-edit-button class="m-1" *ngIf="canUseControls" (click)="onEditClick();"></app-edit-button>
+        <app-delete-button class="m-1" *ngIf="canUseControls" (click)="onDeleteClick();"></app-delete-button>
+    </div>
+</div>
+
+<div *ngIf="displayElementControls && displayLTVRDemoBadge()" class="card-circle" style="text-align:center">
+    <div class="card-circle_inner">
+        <span class="card-circle_l">L</span>
+        <span class="card-circle_t">T</span>
+    </div>
+</div>

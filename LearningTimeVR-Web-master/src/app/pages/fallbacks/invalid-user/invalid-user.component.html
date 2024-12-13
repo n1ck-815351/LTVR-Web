@@ -1,0 +1,11 @@
+<style>#deleteLink:hover{cursor: pointer;}</style>
+<div class="container mt-5 position-fixed top-50 start-50 translate-middle">
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Invalid User</h4>
+        <p>Your account does not exist in our system. Please contact your administrator for assistance.</p>
+        <b>If you believe this to be a mistake, you can try logging in again, or <a id="deleteLink" (click)="authService.DeleteMyUser()" class="btn-link" style="margin:0;padding:0;">delete your account</a>.</b><br />
+        <div class="d-flex flex-column align-items-end">
+            <span class="btn btn-primary ml-auto" (click)="authService.Logout()">Logout</span>
+        </div>
+    </div>
+</div>

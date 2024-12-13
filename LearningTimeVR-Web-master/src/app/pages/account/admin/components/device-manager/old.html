@@ -1,0 +1,85 @@
+<form [formGroup]="form">
+    <div class="input-group my-1">
+        <label class="input-group-text" for="orgSelect">Organization</label>
+        <select (change)="orgChanged($event)" class="form-select" formControlName="organizationSelect">
+            <option id="orgSelect" *ngFor="let org of orgService.collection" [value]="org.id">
+                {{org.title}}</option>
+        </select>
+    </div>
+    <div class="input-group mb-3">
+        <input (change)="fileChanged($event);" type="file" class="form-control" id="inputGroupFile02">
+        <label class="input-group-text" for="inputGroupFile02">CSV</label>
+    </div>
+</form>
+
+
+<div *ngIf="!loading && !showResults && deviceCSV && deviceCSV.devices && deviceCSV.devices.length > 0"
+    class="alert alert-primary" style="margin:auto;width:60%;margin-top:50px;">
+    <h4>Confirm</h4>
+    <p>If the data below looks correct, click save to upload the data to the database using the selected
+        Organization.
+    </p>
+    <span class="btn btn-primary" (click)="pushDevicesToDB();">Save</span>
+</div>
+
+<div *ngIf="loading && !showResults" class="alert alert-info" style="margin:auto;width:60%;margin-top:50px;">
+    <h4>Loading</h4>
+    <p>Saving your devices to the database.</p>
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+<div *ngIf="showResults && !loading && !warning && !fail" class="alert alert-success"
+    style="margin:auto;width:60%;margin-top:50px;">
+    <h4>Success</h4>
+    <p>{{results}}</p>
+</div>
+<div *ngIf="showResults && !loading && warning && !fail" class="alert alert-warning"
+    style="margin:auto;width:60%;margin-top:50px;">
+    <h4>Success, but...</h4>
+    <p>{{results}}</p>
+</div>
+<div *ngIf="showResults && !loading && fail" class="alert alert-danger" style="margin:auto;width:60%;margin-top:50px;">
+    <h4>Failed</h4>
+    <p>{{results}}</p>
+</div>
+
+<div *ngIf="!showResults && !loading && deviceCSV.devices && deviceCSV.devices.length > 0"
+    class="card position-relative" style="min-height:100px;margin-top:50px;">
+
+    <div *ngIf="!deviceCSV || !deviceCSV!.devices || deviceCSV!.devices!.length == 0" class="position-relative"
+        style="width:100%;height:100%;">
+        <p style="left:0;right:0;top:0;bottom:0;vertical-align: middle;text-align: center;" class="position-absolute">No
+            device data selected.</p>
+    </div>
+
+
+
+
+    <table *ngIf="deviceCSV && deviceCSV.devices && deviceCSV.devices.length > 0" class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Device Group</th>
+                <th>Serial Number</th>
+                <th>Firmware Version</th>
+                <th>Android Version</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let device of deviceCSV.devices; trackBy: trackByDeviceSN; let i = index;">
+                <td>{{ i }}</td>
+                <td>{{ device.DeviceID }}</td>
+                <td>{{ device.Name }}</td>
+                <td>{{ device.DeviceGroup }}</td>
+                <td>{{ device.SerialNumber }}</td>
+                <td>{{ device.FirmwareVersion }}</td>
+                <td>{{ device.AndroidVersion }}</td>
+                <td>{{ device.CreatedAt }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

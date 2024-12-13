@@ -1,0 +1,130 @@
+<div class="modal-content">
+    <form id="genericEditorForm" [formGroup]="inputForm" class="needs-validation" novalidate>
+        <div class="modal-header">
+            <h5 class="modal-title d-flex justify-content-between" id="validationModalLabel" style="width:100%;">
+                Edit {{nodeType}} -- "{{inputElement.title}}"
+            </h5>
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="CommitResults(false)"></button>
+        </div>
+        <div class="modal-body">
+            <div *ngIf="loading == false" class="input-group row mx-auto">
+                <style>
+                    .forminput {
+                        margin: auto;
+                        margin-top: 0;
+                        margin-bottom: 5px;
+                    }
+                </style>
+
+                <div class="input-group forminput">
+                    <span class="input-group-text" id="fortitle">Title</span>
+                    <input id="inputTitle" autofocus class="form-control" formControlName="title" [attr.placeholder]="inputElement.title"
+                        aria-describedby="fortitle" required>
+                </div>
+                <div class="input-group forminput">
+                    <span class="input-group-text" id="fordescription">Description</span>
+                    <input class="form-control" formControlName="description" [attr.placeholder]="inputElement.description"
+                        aria-describedby="fordescription" required>
+                </div>
+                <div class="input-group forminput">
+                    <span class="input-group-text" id="fortags">Tags</span>
+                    <input class="form-control" formControlName="tags" [attr.placeholder]="inputElement.tags" aria-describedby="fortags" required>
+                </div>
+                
+                <div *ngIf="nodeType == 'Content'">
+                    <!-- Content Type -->
+                    <div class="input-group cformInput">
+                        <label id="typeLabel" class="input-group-text">Media Type</label>
+                        <select value="fbRequestService._contentTypes[5]" formControlName="contentType" class="form-select" aria-describedby="typeLabel"> <!-- (change)="onTypeChange()" -->
+                            <!-- <option *ngFor="let type of fbRequestService._contentTypes; let i = index;" [attr.value]="i">
+                                <span *ngIf="processTypeName(type).toLowerCase().includes('unimplemented') == false">{{
+                                    processTypeName(type) }}</span>
+                                <span *ngIf="processTypeName(type).toLowerCase().includes('unimplemented') == true">{{
+                                    processTypeName(type) }}</span>
+                            </option> -->
+                            <option value=0>Image</option>
+                            <option value=1>360 Image</option>
+                            <option value=2>Video</option>
+                            <option value=3>360 Video</option>
+                            <option value=4>Model</option>
+                            <option value=5>Quiz</option>
+                            <option value=6>Web Browser</option>
+                            <option value=7>Youtube Video</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Youtube Metadata -->
+                    <div *ngIf="selectedType != null && processTypeName(selectedType).toLowerCase().includes('youtube')" class="input-group"
+                        style="margin-bottom:5px;">
+                        <div class="input-group d-flex">
+                    
+                            <!-- Format Type -->
+                            <div style="margin-left:10px;">
+                                <label id="typeLabel" class="" style="margin-right:5px;">Format Type:</label>
+                                <select (change)="updateBooleans()" formControlName="videoFormat" class="form-select-sm"
+                                    aria-describedby="typeLabel">
+                                    <option value=0 selected>
+                                        <span> Flat </span>
+                                    </option>
+                                    <option value=1>
+                                        <span> 360 </span>
+                                    </option>
+                                    <option value=2>
+                                        <span> 180 </span>
+                                    </option>
+                                </select>
+                            </div>
+                    
+                            <!-- Stereoscopic -->
+                            <div *ngIf="is360" class="form-check d-flex" style="margin-left:10px;">
+                                <input (change)="updateBooleans()" formControlName="isStereo" class="form-check-input" type="checkbox"
+                                    value="" id="flexCheckDefault">
+                                <label class="form-check-label" style="margin-left:5px;" for="flexCheckDefault">
+                                    Stereoscopic
+                                </label>
+                                <!-- Removed option from web app to set the stereo 3D layout. -->
+                                <!-- <div *ngIf="isStereo" style="margin-left:10px;">
+                                    <select (change)="onStereoLayoutChange()" formControlName="stereoLayout" class="form-select-sm"
+                                        aria-describedby="typeLabel">
+                                        <option value=0 selected>
+                                            <span> Over Under </span>
+                                        </option>
+                                        <option value=1>
+                                            <span> Side by Side </span>
+                                        </option>
+                                        <option value=2>
+                                            <span> Quad </span>
+                                        </option>
+                                    </select>
+                                </div> -->
+                            </div>
+                            
+                            <!-- <iframe #videoPlayer width="100%" height="100%" [attr.src]="inputElement.getURL" frameborder="0" allowfullscreen></iframe>
+                            <img [src]="capturedFrame" *ngIf="capturedFrame"> -->
+                        </div>
+                    
+                    </div>
+                </div>
+
+
+            </div>
+            <div *ngIf="loading == true" class="spinner-border mx-auto" role="status" style="text-align: center;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="col d-flex justify-content-between" style="width:100%;" *ngIf="loading == false">
+                <div class="nodeType">
+                    {{nodeType}}
+                </div>
+                <div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        (click)="CommitResults(false)">Cancel</button>
+                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal"
+                        (click)="CommitResults(true)" style="margin-left:5px;">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

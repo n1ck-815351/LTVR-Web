@@ -1,0 +1,60 @@
+<div class="card mb-3" style="padding:0;">
+    <!-- Display the user's profile photo -->
+    <img *ngIf="!user.baseUser?.avatarDataUrl"
+        [src]="'https://api.readyplayer.me/v1/avatars/64519770151e836f98b9b313.png'" alt="Profile Photo"
+        class="card-img-top rounded-circle" style="width:100%; height:auto;">
+    <img *ngIf="user.baseUser?.avatarDataUrl"
+        [src]="userService.parseAvatarUrl(user.baseUser!.avatarDataUrl!)" alt="Profile Photo"
+        class="card-img-top rounded-circle" style="width:100%; height:auto;">
+    <div class="card-body" style="margin:0;padding:0;">
+        <div style="padding:10px;">
+            <h6 class="card-title">{{ user.baseUser!.displayName }}</h6>
+            <!-- <p class="card-text">{{ user.baseUser?.title }}</p> -->
+
+        </div>
+        <div class="card-footer d-flex justify-content-between" style="margin:0; padding:0; text-align: right;">
+            <style>
+                .mybtn {
+                    text-decoration: none;
+                }
+
+                .icon_lower_right {
+                    margin-right: 5px;
+                    vertical-align: middle !important;
+                    margin-top: auto !important;
+                    margin-bottom: auto !important;
+                    height: auto !important;
+                    color: white;
+                    border: solid 1px black;
+                    border-radius: 5px;
+                    font-size: 30px !important;
+                }
+            </style>
+            <div>
+                <span class=" icon_lower_right material-symbols-outlined" *ngIf="user?.baseUser?.userType! == 3"
+                    style="background-color: blue; ">
+                    shield_person
+                </span>
+                <span class="icon_lower_right material-symbols-outlined" *ngIf="user?.baseUser?.userType! == 2"
+                    style="background-color: green;">
+                    handyman
+                </span>
+                <span class="icon_lower_right material-symbols-outlined" *ngIf="user?.baseUser?.userType! == 1"
+                    style="background-color: teal;">
+                    school
+                </span>
+                <span class="icon_lower_right material-symbols-outlined" *ngIf="user?.baseUser?.userType! == 0"
+                    style="background-color: #515151;">
+                    person
+                </span>
+                <span style="margin-top:auto; margin-bottom:auto;">{{user!.baseUser!.title}}</span>
+            </div>
+            <div>
+                <a class="mybtn material-symbols-outlined btn btn-link" (click)="editUser(user)">edit</a>
+                <a class="mybtn material-symbols-outlined btn btn-link" (click)="deleteUser(user)"
+                    style="color: red;">delete</a>
+            </div>
+
+        </div>
+    </div>
+</div>

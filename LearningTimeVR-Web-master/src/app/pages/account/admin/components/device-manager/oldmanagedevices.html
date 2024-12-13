@@ -1,0 +1,40 @@
+<div class="tab-pane fade" id="manage" role="tabpanel" aria-labelledby="manage-tab">
+    <form [formGroup]="form">
+        <div class="input-group my-1">
+            <label class="input-group-text" for="orgSelect">Organization</label>
+            <select (change)="orgChanged($event)" class="form-select" formControlName="organizationSelect">
+                <option id="orgSelect" *ngFor="let org of orgService.collection" [value]="org.id">
+                    {{org.title}}</option>
+            </select>
+        </div>
+    </form>
+    <div *ngIf="manageDevicesArray" class="card position-relative" style="min-height:100px;margin-top:50px;">
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Device Group</th>
+                    <th>Serial Number</th>
+                    <th>Firmware Version</th>
+                    <th>Android Version</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let device of manageDevicesArray; trackBy: trackByDeviceSN; let i = index;">
+                    <td>{{ i }}</td>
+                    <td>{{ device.DeviceID }}</td>
+                    <td>{{ device.Name }}</td>
+                    <td>{{ device.DeviceGroup }}</td>
+                    <td>{{ device.SerialNumber }}</td>
+                    <td>{{ device.FirmwareVersion }}</td>
+                    <td>{{ device.AndroidVersion }}</td>
+                    <td>{{ device.CreatedAt }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+<div *ngIf="!this.userService.isAnonymous()" class="card-content_container">
+    <div style="display: flex; justify-content: space-between;">
+        <div class="card-content_description container-fluid my-auto">
+            <div style="width: 85%;" *ngIf="content.getURL != null">
+                <app-image [contentIndex]="contentIndex" [src]="content.getURL"
+                        *ngIf="content.contentType == 0 || content.contentType == 1"></app-image>
+
+                <app-video [title]="content.title" class="preview" [src]="content.getURL" [yt]="isYoutube"
+                    *ngIf="content.contentType == 2 || content.contentType == 7 || content.contentType == 8 || content.contentType == 9 || content.contentType == 10"></app-video>
+
+                <app-model class="preview fa-xl" *ngIf="content.contentType == 4"></app-model>
+
+                
+            </div>
+            
+            
+            <div style="width:100%; height:auto; vertical-align: middle; margin-top:auto; margin-bottom:auto;" name="defaultPreview" class="my-auto"
+                *ngIf="content.getURL == null || content.contentType == 3 ||content.contentType == 5 ||content.contentType == 6">
+                No preview available.
+            </div>
+        </div>
+        <style>
+            .btn-order {
+                width:30px; height: 30px; cursor: pointer;
+            }
+        </style>
+        <div class="col d-flex"
+            style="background:rgba(255,255,255, 0); border:1px solid rgba(255,255,255, .2); border-radius: 10px; max-width:10%; min-width: 50px;">
+            <div class="col d-table my-auto" style="padding:10px; background:rgba(255,255,255, 0);">
+                <div class="btn-order">
+                    <a (click)="moveContentToFirstOrLast()" ngbTooltip="Move to top." ngbtoo>
+                        <span class="material-symbols-outlined">
+                            vertical_align_top
+                        </span>
+                    </a>
+                </div>
+                <div class="btn-order">
+                    <a (click)="moveContent(-1)" ngbTooltip="Move up.">
+                        <span class="material-symbols-outlined">
+                            move_up
+                        </span>
+                    </a>
+                </div>
+                <div class="btn-order">
+                    <a (click)="moveContent(1)" ngbTooltip="Move down.">
+                        <span class="material-symbols-outlined">
+                            move_down
+                        </span>
+                    </a>
+                </div>
+                <div class="btn-order">
+                    <a (click)="moveContentToFirstOrLast(false)" ngbTooltip="Move to bottom.">
+                        <span class="material-symbols-outlined">
+                            vertical_align_bottom
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-content_title">
+        <div class="card-title" style="max-width:60%;">
+            <b>{{content.title}}</b>
+            {{content.description}}
+            <h6>Type</h6>
+            <div *ngIf="content.contentType">{{fbRequestService._contentTypes[content.contentType]}}</div>
+            <p
+                *ngIf="content.contentType && content.contentFormatType && processTypeName(fbRequestService._contentTypes[content.contentType]).toLowerCase().includes('youtube')">
+                {{fbRequestService._formatTypes[content.contentFormatType]}}</p>
+            <p
+                *ngIf="content.isStereoscopic && content.contentType && processTypeName(fbRequestService._contentTypes[content.contentType]).toLowerCase().includes('youtube')">
+                {{ (content.isStereoscopic) ? "Stereoscopic" : "" }}</p>
+        </div>
+        <div style="padding:10px; height:auto; max-width: 100px;">
+            <a class="button-primary_action" style="margin:15px;"
+                (click)="editContentRequest(content);">
+                <div class="material-symbols-outlined">
+                    <div class="myBtn">edit</div>
+                </div>
+            </a>
+            <a class="button-primary_critical"
+                (click)="deleteRequest(content)"
+                data-bs-target="#validationModal" data-bs-toggle="modal">
+                <div class="material-symbols-outlined">
+                    delete
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

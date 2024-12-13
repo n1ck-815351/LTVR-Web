@@ -1,0 +1,10 @@
+<video width="100%" height="auto" controls *ngIf="!yt">
+    <br />
+    <source [attr.src]="src" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+
+
+<!-- <iframe width="100%" height="auto" [attr.src]="transform(src)" *ngIf="yt" frameborder="0" allowfullscreen></iframe> -->
+<img width="100%" height="auto" class="previewImg" *ngIf="yt" [title]="title" [src]="getThumbnailUrl()" alt="Video thumbnail" (click)="openVideoModal()" style="cursor:pointer;">

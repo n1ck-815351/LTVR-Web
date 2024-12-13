@@ -1,0 +1,192 @@
+:root {
+    --download-queue-height: 0px;
+}
+
+#downloadQueueWindow {
+    position: fixed;
+    left: 0%;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    z-index: 999;
+    background-color: white;
+    border-radius: 10px;
+    border: solid 1px rgba(0, 0, 0, 0);
+    padding: 0;
+}
+
+.slide-in #downloadQueueWindow {
+    bottom: 0;
+}
+
+.slide-out #downloadQueueWindow {
+    bottom: var(--download-queue-height);
+}
+
+.slide-in {
+    animation: slide-in-animation 0.3s ease-in forwards;
+}
+
+.slide-out {
+    animation: slide-out-animation 0.3s ease-in forwards;
+}
+
+@keyframes slide-out-animation {
+    from {
+        bottom: 0;
+    }
+
+    to {
+        bottom: var(--download-queue-height);
+    }
+}
+
+@keyframes slide-in-animation {
+    from {
+        bottom: var(--download-queue-height);
+    }
+
+    to {
+        bottom: 0;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        color: #2196f3;
+    }
+
+    50% {
+        color: #64b5f6;
+    }
+
+    100% {
+        color: #2196f3;
+    }
+}
+
+.pulse {
+    animation: pulse 2s ease-in-out infinite;
+}
+.clearButton{
+    background-color:#2196f3;
+    border:solid 1px #2196f3;
+    border-radius: 10px;
+    width:50%;
+    margin:auto;
+}
+.clearButton:hover{
+    cursor: pointer;
+    background-color: #145f9d;
+    }
+.cancelupload {
+    position: absolute;
+    right: 5px;
+    color: black;
+}
+
+.cancelupload:hover {
+    color: red;
+    cursor: pointer;
+}
+
+.pendingUpload .icon:hover {
+    cursor: pointer;
+}
+
+.pendingUpload .iconpending {
+    visibility: visible;
+    position: absolute;
+    right: 5px;
+    color: rgba(0, 0, 0, .5);
+}
+
+.pendingUpload:hover .iconpending {
+    visibility: hidden;
+}
+
+.pendingUpload .iconcancel {
+    visibility: hidden;
+    position: absolute;
+    right: 5px;
+    color: red;
+}
+
+.pendingUpload:hover .iconcancel {
+    visibility: visible;
+}
+
+.currentUploadContainer {
+    padding-bottom: 10px;
+    background-color: rgba(142, 142, 255, 0.1);
+    border-bottom: none;
+}
+
+.uploadBody {
+    margin: 0;
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+    height: auto;
+}
+
+#queueList {
+    width: 20vw;
+    height: auto;
+    overflow-y: auto;
+    max-height: 40vh;
+    transition:width .5s ease;
+}
+
+@media only screen and (max-width: 1500px) {
+    #queueList {
+        width: 30vw;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    #queueList {
+        width: 50vw;
+    }
+}
+
+
+.uploadListItem {
+    padding: 0;
+    margin: 0;
+}
+
+.uploadListItem ngb-progressbar {
+    margin-right: 5px;
+}
+
+.customBtn {
+    border: solid 1px rgba(0, 0, 0, 0.125);
+    border-radius: 10px;
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: white;
+}
+
+.customBtn:hover {
+    border-color: rgba(0, 0, 0, 0.125);
+}
+
+.customBtn:active {
+    background-color: rgba(0, 0, 0, .125);
+}
+
+.spacerParent {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: solid 0.1px rgba(0, 0, 0, .125);
+    background-color: rgba(0, 0, 0, .005);
+    border: none;
+}
+
+.spacer {
+    width: 80%;
+    border: solid 1px rgba(0, 0, 0, .1);
+
+}

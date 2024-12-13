@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "learningtimevr-2023"
+  },
+  "targets": {
+    "learningtimevr-2023": {
+      "hosting": {
+        "LearningTimeVR": [
+          "learningtimevr-2023"
+        ]
+      }
+    }
+  }
+}

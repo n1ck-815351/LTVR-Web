@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h4 *ngIf="loading">Loading</h4>
+    <h4 *ngIf="!loading">Move Device</h4>
+</div>
+<div class="modal-body">
+    <form [formGroup]="form">
+        <div *ngIf="loading" style="padding:10px; margin:auto; text-align: center;">
+            <p>Moving your devices</p>
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div *ngIf="!loading" class="input-group my-1">
+            <label class="input-group-text" for="orgSelect">Organization</label>
+            <select class="form-select" formControlName="organizationSelect">
+                <option id="orgSelect" *ngFor="let org of orgService.collection" [value]="org.id">
+                    {{org.title}}
+                </option>
+            </select>
+            <button class="btn btn-primary" (click)="Confirm()">Confirm</button>
+            <button class="btn btn-primary" (click)="Cancel()">Cancel</button>
+        </div>
+    </form>
+</div>

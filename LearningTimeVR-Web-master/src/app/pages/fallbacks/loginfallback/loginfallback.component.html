@@ -1,0 +1,42 @@
+<div id="container" style="margin: 10%;">
+    
+    <form name="loginForm" class="form-control" *ngIf="!authService.loggedIn">
+        <div class="alert alert-secondary">
+            Don't have an account? Contact us at <a href="mailto:contact@example.com">contact@example.com</a> or
+            <a href="call:5555551234">(312) 555-1234</a> for assistance.
+        </div>
+        <div class="modal-header">
+            <h5 class="display-5">Login</h5>
+        </div>
+        <div class="loginform mx-auto">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Email</span>
+                </div>
+                <input name="userEmail" #email [(ngModel)]="userEmail" type="text" class="form-control"
+                    placeholder="e.g. johndoe@gmail.com" aria-label="name" aria-describedby="">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Password</span>
+                </div>
+                <input name="userPassword" #password [(ngModel)]="userPassword" type="password" class="form-control"
+                    placeholder="password" aria-label="password" aria-describedby="">
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <div class="justify-content-between d-flex" style="width: 95%;">
+                <div class="d-flex">
+                    <!-- <button type="button" class="btn btn-primary" (click)="LoginWithGoogle()">Login with Google</button> -->
+                </div>
+                <div class="d-flex">
+                    <button type="submit" class="btn btn-primary mx-1" (click)="LoginWithEmailPassword()">Login</button>
+                    <!-- <button type="button" class="btn btn-primary mx-1" (click)="SignupWithEmailPassword()">Register</button> -->
+                    <!-- <button type="button" class="btn btn-secondary mx-1" data-bs-toggle="modal"
+                        data-bs-target="#loginModal">Cancel</button> -->
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

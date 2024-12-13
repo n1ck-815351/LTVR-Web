@@ -1,0 +1,128 @@
+<!-- <p *ngFor="let myuser of users">{{myuser.baseUser.firstName}} {{myuser.baseUser.lastName}}</p> -->
+
+<div *ngIf="!invalidLink && userType && org && school" class="container my-5">
+    <form id="registerForm" [formGroup]="registerForm" class="form-control needs-validation" novalidate
+        (ngSubmit)="onSubmit()">
+        <!-- <h1>Registering for: {{userType}} account in {{org}}, {{school.title}}</h1> -->
+        <h2 class="mb-4">{{userType}} Registration</h2>
+        <div>
+            <span class="badge bg-primary">{{org}}</span>
+            <span style="margin:5px;">/</span>
+            <span class="badge bg-secondary">{{school.title}}</span>
+        </div>
+
+        <!-- & {{link.school}} -->
+
+        <div class="mb-3">
+            <label for="displayName" class="form-label">Display Name</label>
+            <input type="text" class="form-control" id="displayName" formControlName="displayName" required>
+            <div class="text-danger"
+                *ngIf="registerForm.controls['displayName'].errors && (registerForm.controls['displayName'].dirty || registerForm.controls['displayName'].touched)">
+                <small *ngIf="registerForm.controls['displayName'].errors['required']">Display Name is required</small>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName" formControlName="firstName" required>
+            <div class="text-danger"
+                *ngIf="registerForm.controls['firstName'].errors && (registerForm.controls['firstName'].dirty || registerForm.controls['firstName'].touched)">
+                <small *ngIf="registerForm.controls['firstName'].errors['required']">First name is required</small>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastName" formControlName="lastName" required>
+
+            <div class="text-danger"
+                *ngIf="registerForm.controls['lastName'].errors && (registerForm.controls['lastName'].dirty || registerForm.controls['lastName'].touched)">
+                <small *ngIf="registerForm.controls['lastName'].errors['required']">Last name is required</small>
+            </div>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" formControlName="email" required>
+            <div class="text-danger"
+                *ngIf="registerForm.controls['email'].errors && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)">
+                <small *ngIf="registerForm.controls['email'].errors['required']">Email is required</small>
+                <small *ngIf="registerForm.controls['email'].errors['email']">Email must be a valid email
+                    address</small>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" formControlName="password" required>
+            <div class="text-danger"
+                *ngIf="registerForm.controls['password'].errors && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)">
+                <small *ngIf="registerForm.controls['password'].errors['required']">Password is required</small>
+                <small *ngIf="registerForm.controls['password'].errors['pattern']">Password must be a minimum of 6
+                    characters</small>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword" required>
+            <div class="text-danger"
+                *ngIf="registerForm.controls['confirmPassword'].invalid && (registerForm.controls['confirmPassword'].dirty || registerForm.controls['confirmPassword'].touched)">
+
+                <small *ngIf="registerForm.controls['confirmPassword'].errors?.['required']">Confirm password.</small>
+                <small *ngIf="registerForm.controls['confirmPassword'].errors?.['passwordMatches']">Passwords must
+                    match</small>
+            </div>
+        </div>
+
+        <!-- <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword" required>
+            <div class="invalid-feedback"
+                /*ngIf="registerForm.get('confirmPassword').errors && registerForm.get('confirmPassword').invalid && (registerForm.get('confirmPassword').dirty || registerForm.get('confirmPassword').touched)">
+                <div *ngIf="registerForm.get('confirmPassword').errors!['required']">Confirm password.</div>
+                <div *ngIf="registerForm.get('confirmPassword').errors!['confirmPassword']">Passwords must match</div>
+            </div>
+        </div> -->
+
+
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" id="phone" formControlName="phone" required pattern="^\d{10}$">
+            <div class="text-danger"
+                *ngIf="registerForm.controls['phone'].errors && (registerForm.controls['phone'].dirty || registerForm.controls['phone'].touched)">
+                <small *ngIf="registerForm.controls['phone'].errors['required']">Phone number is required</small>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="profilePicture" class="form-label">Profile Picture</label>
+            <input (change)="check()" type="file" class="form-control" id="profilePicture"
+                formControlName="profilePicture" accept=".jpg,.jpeg,.png">
+            <!-- .jpg,.jpeg,.png -->
+            <div *ngIf="registerForm.controls['profilePicture'].valid == false">
+                File type must be .jpg,
+                .jpeg, or .png</div>
+            <!-- <div class="invalid-feedback"
+                //*ngIf="registerForm.controls['profilePicture'].errors && (registerForm.controls['profilePicture'].dirty || registerForm.controls['profilePicture'].touched)">
+                <div *ngIf="registerForm.controls['profilePicture'].errors['required']">Profile picture is required
+                </div>
+                
+            </div> -->
+        </div>
+
+        <button type="submit" class="btn btn-primary d-block mx-auto">Register</button>
+    </form>
+</div>
+
+<div *ngIf="invalidLink || !userType || !org || !school">
+    <div *ngIf="org && school && invalidLink">
+        <div>
+            <span class="badge bg-primary">{{org}}</span>
+            <span style="margin:5px;">/</span>
+            <span class="badge bg-secondary">{{school.title}}</span>
+        </div>
+        This link has expired, please contact your administrator for further instruction.
+    </div>
+    <i>Invalid register link.</i>
+    
+</div>

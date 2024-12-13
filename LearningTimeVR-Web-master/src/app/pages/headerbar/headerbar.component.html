@@ -1,0 +1,55 @@
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<div class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow justify-content-between">
+    <div id="title" class="" style="height:100%; display: flex;">
+        <img src="https://learningtimevr.com/wp-content/uploads/2022/04/logo.gif"
+            style="width: auto; max-height:46px; cursor: pointer;" (click)="this.navigation.redirectToClasses()" />
+
+        <!-- <h4 style="margin:0;" *ngIf="headerbarText == null">Learning Time VR</h4> -->
+    </div>
+
+    <style>
+        #rpm {
+            width: 50px;
+            height: auto;
+            /* margin-left:5px; */
+        }
+
+        #rpmContainer {
+            margin-left: 5px;
+            margin-right: 5px;
+
+        }
+    </style>
+    
+
+    <div *ngIf="!isAnonymous && global.invalidUser == false" id="userinfoWrapper" style="display: flex; justify-content: space-around;">
+        
+        <app-button class="m-2" (buttonClickEvent)="openInviteModal()" icon="person">Invite a User</app-button>
+
+        <app-button class="m-2" (buttonClickEvent)="createClassRequest()" icon="add">Create a Class</app-button>
+
+        <a class="userinfo-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
+            <div class="d-flex flex-row justify-content-between" style="width:auto;">
+                <div *ngIf="authService.loggedIn && userService.user" class="acc">
+                    {{userService.user!.baseUser!.displayName}}</div>
+                <!-- <div *ngIf="authService.loggedIn" class="acc">{{authService.authState.email}}</div> -->
+                <div *ngIf="!authService.loggedIn" class="acc">Not signed in</div>
+                <div id="rpmContainer" class="rounded-circle overflow-hidden border border-secondary">
+                    <img *ngIf="authService.loggedIn && userService.user && userService.user.baseUser?.avatarDataUrl"
+                        class="card-img-top" id="rpm" width="46px" height="auto"
+                        [src]="userService.parseAvatarUrl(userService.user.baseUser?.avatarDataUrl!)">
+
+                    <img *ngIf="authService.loggedIn && (!userService.user || !userService.user.baseUser?.avatarDataUrl)"
+                        class="card-img-top" id="rpm" width="46px" height="auto"
+                        src="https://api.readyplayer.me/v1/avatars/64519770151e836f98b9b313.png">
+                    <span *ngIf="!authService.loggedIn" class="material-symbols-outlined">person</span>
+                </div>
+                <!-- <div class="acc material-symbols-outlined">
+                    account_circle
+                </div> -->
+            </div>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+#breadcrumb, #breadcrumb h2, #breadcrumb a {
+    display: inline;
+    color: #9a9a9a;
+    font-size: .75rem;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+
+#breadcrumb a:hover {
+    transition: all ease .5s;
+    color: #035BD7;
+}

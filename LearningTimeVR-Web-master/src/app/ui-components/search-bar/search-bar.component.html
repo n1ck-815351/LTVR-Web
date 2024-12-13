@@ -1,0 +1,25 @@
+<mat-card class="d-flex flex-row search-container rounded-pill pr-1">
+    <span class="align-bottom p-2 search-icon">
+        <mat-card-content>
+            <mat-icon>search</mat-icon>
+        </mat-card-content>
+    </span>
+    <mat-form-field class="d-inline-flex pt-3 search-input">
+        <mat-label>{{this.placeholderLabel}}</mat-label>
+        <input 
+            #searchInput
+            (keyup)="0"
+            type="text"
+            matInput
+            placeholder={{this.placeholderText}}
+            aria-label="Search"
+            [matAutocomplete]="auto"
+            [formControl]="searchControl"
+            (change)="onTextChange($event)">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)='onOptionSelected($event.option.value)' (selectionChange)="onChange($event)">
+            <mat-option (onSelectionChange)="onEnter($event)" *ngFor="let option of filteredOptions | async" [value]="option.title">
+                {{option.title}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</mat-card>

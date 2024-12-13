@@ -1,0 +1,161 @@
+<div class="card">
+    <div class="card-header">
+        Registration Links
+    </div>
+    <div class="card-body">
+        <div class="mb-3">
+            <label for="userType" class="form-label">User Type</label>
+            <select class="form-select" id="userType" [(ngModel)]="selectedUserType">
+                <option *ngFor="let userType of linkService.userTypes; let i = index" [value]="i">{{ userType }}
+                </option>
+            </select>
+        </div>
+        <div class="form-check">
+            <input name="expires" id="expires" class="form-check-input" type="checkbox"
+                (change)="expiresChanged($event)">
+            <label for="expires" class="form-check-label">Expires</label>
+        </div>
+        <div class="form-check">
+            <input name="limitUses" id="limitUses" class="form-check-input" type="checkbox"
+                (change)="limitChanged($event)">
+            <label for="limitUses" class="form-check-label">Limit uses</label>
+        </div>
+        <div class="mb-3">
+            <input *ngIf="limitUses" type="number" class="form-control" id="usesLimit" [(ngModel)]="usesLimit" min="1">
+        </div>
+
+
+        <div class="mb-3">
+            <label for="org" class="form-label">Organization</label>
+            <select (change)="onOrgChange();" class="form-select" id="org" [(ngModel)]="selectedOrg">
+                <option *ngFor="let org of orgService.collection; let i = index" [value]="i">{{ org.title }}
+                </option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="school" class="form-label">School</label>
+            <select class="form-select" id="school" [(ngModel)]="selectedSchool">
+                <option *ngFor="let school of schoolCollection; let i = index" [value]="i">{{ school.title }}
+                </option>
+            </select>
+        </div>
+
+
+
+
+
+        <button class="btn btn-primary ml-auto" (click)="generateLinks()">Generate Link</button>
+        <hr>
+        <div *ngIf="linkService.collection && linkService.collection.length > 0">
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Link</th>
+                        <th>Organization</th>
+                        <th>School</th>
+                        <th>User Type</th>
+                        <th>Expiration Date</th>
+                        <th>Uses Left</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let link of filteredLinks" class=" align-items-center">
+                        <td class="position-relative">
+                            <!-- <div *ngIf="getTimeExpired(link)">expired</div> -->
+                            <div class="d-flex align-items-center">
+                                <span class="material-symbols-outlined btn btn-link"
+                                    (click)="linkService.copyLink(link)" style="text-decoration:none;">link</span>
+                                <span [ngClass]="{ 'expired': linkService.getTimeExpired(link) }" class="ms-2">{{
+                                    link.url }}</span>
+                            </div>
+                            <span *ngIf="linkService.getTimeExpired(link)" class="position-absolute bottom-0 start-0"
+                                style="margin-left:5px;"><i>expired</i></span>
+
+                        </td>
+                        <td [ngClass]="{ 'expired': linkService.getTimeExpired(link) }" class="align-middle">{{
+                            linkService.getOrg(link) }}</td>
+                        <td [ngClass]="{ 'expired': linkService.getTimeExpired(link) }" class="align-middle">{{
+                            getSchool(link) }}</td>
+                        <td [ngClass]="{ 'expired': linkService.getTimeExpired(link) }" class="align-middle">{{
+                            linkService.userTypes[link.userType] }}</td>
+                        <!-- <td>{{ link.expirationDate }}</td> -->
+
+                        <!-- <td [ngClass]="{ 'expired': getTimeExpired(link) }" class="align-middle"
+                                        //*ngIf="!getTimeExpired(link)">
+                                        {{ link.expirationDate | date: 'short' }} <br />
+                                        ({{ getTimeUntilExpiration(link.expirationDate) }})
+                                    </td> -->
+                        <style>
+                            .countdown {
+                                display: flex;
+                                justify-content: center;
+                                margin-top: 0.5rem;
+                            }
+
+                            .countdown span {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                width: 2rem;
+                                height: 2rem;
+                                background-color: #eee;
+                                margin: 0 0.25rem;
+                                border-radius: 50%;
+                                font-weight: bold;
+                                font-size: 1.2rem;
+                                text-align: center;
+                            }
+
+                            .countdown span.days {
+                                background-color: #f44336;
+                                color: #fff;
+                            }
+
+                            .countdown span.hours {
+                                background-color: #2196f3;
+                                color: #fff;
+                            }
+
+                            .countdown span.minutes {
+                                background-color: #4caf50;
+                                color: #fff;
+                            }
+                        </style>
+
+                        <td *ngIf="!link.expires">No Expire Date</td>
+                        <td [ngClass]="{ 'expired': linkService.getTimeExpired(link) }" class="align-middle"
+                            *ngIf="link.expires && !linkService.getTimeExpired(link)">
+                            {{ link.expirationDate | date: 'short' }}
+                            <small class="countdown" style="width:60px;">
+                                {{ linkService.getTimeUntilExpiration(link.expirationDate) }}
+                            </small>
+                        </td>
+
+                        <td [ngClass]="{ 'expired': linkService.getTimeExpired(link) }" class="align-middle"
+                            *ngIf="link.expires && linkService.getTimeExpired(link)">
+                            Expired Link
+                        </td>
+                        <td *ngIf="link.limitUses" [ngClass]="{ 'expired': linkService.getTimeExpired(link) }" class="align-middle">{{
+                            link.uses }}
+                        </td>
+                        <td *ngIf="!link.limitUses">
+                            No Limit
+                        </td>
+
+                        <td class="align-middle">
+                            <div class="d-flex align-items-center">
+                                <span class="material-symbols-outlined btn btn-link text-danger"
+                                    style="text-decoration:none;" (click)="linkService.deleteLink(link)">
+                                    delete_forever
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

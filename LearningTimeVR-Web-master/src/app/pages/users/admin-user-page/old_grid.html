@@ -1,0 +1,32 @@
+<div class="container">
+    <h1 *ngIf="org">{{org.title}}</h1>
+    <!-- Search Bar -->
+    <div class="mb-3">
+        <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search" />
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="mb-3 ml-auto" style="width:10%;">
+        <label for="userFilter" class="form-label">Filter Users</label>
+        <!-- [(ngModel)]="selectedFilter" (change)="filterUsers(selectedFilter)" -->
+        <select class="form-select" id="userFilter">
+            <option>All</option>
+            <option>Admins</option>
+            <option>Mods</option>
+            <option>Teachers</option>
+            <option>Students</option>
+        </select>
+    </div>
+
+    <!-- User Grid -->
+    <div class="row">
+        <div class="col-6 col-md-4 col-lg-3" *ngFor="let user of userService.usersInOrganization">
+            <div class="d-flex flex-column align-items-center">
+                <!-- Display the user's profile photo with rounded edges -->
+                <img [src]="'https://api.readyplayer.me/v1/avatars/64519770151e836f98b9b313.png'" alt="Profile Photo"
+                    style="width: 80px; height: 80px; background-color:#00000073; border:solid 1px #515151; border-radius:10px;">
+                <h6 class="mt-2">{{ user.baseUser?.displayName }}</h6>
+            </div>
+        </div>
+    </div>
+</div>

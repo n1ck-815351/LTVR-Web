@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <h5 class="modal-title">{{headerTxt}}</h5>
+</div>
+<div class="modal-body">
+    <p>{{bodyTxt}}</p>
+</div>
+<div class="modal-footer">
+    <button *ngIf="cancelBtnTxt != ''" type="button" class="btn btn-secondary"
+        (click)="Cancel()">{{cancelBtnTxt}}</button>
+    <button type="button" class="btn btn-primary" (click)="Confirm()">{{confirmBtnTxt}}</button>
+</div>

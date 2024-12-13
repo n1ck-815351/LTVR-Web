@@ -1,0 +1,7 @@
+<button 
+    type="button" 
+    class="button-action_light d-flex justify-content-between align-items-center" 
+    (click) ="onButtonClick()">
+    <ng-content></ng-content>
+    <mat-icon *ngIf="this.icon != ''">{{this.icon}}</mat-icon>
+</button>

@@ -1,0 +1,72 @@
+<div *ngIf="!this.userService.isAnonymous()" class="app-container">
+
+    <app-breadcrumb [breadcrumbs]="this.crumbs" [currentPage]="this.lessonService.selected.title"></app-breadcrumb>
+
+    <div style="width: 1168px; height: 500px; text-align: center; overflow: hidden; margin: auto; margin-bottom: 20px;">
+        <img *ngIf="!this.activeContent" [src]="placeholderContentSource" style="display: block;height: 400px; margin: auto;">
+
+        <app-image [src]="this.activeContent?.getURL" *ngIf="this.activeContent?.contentType == 0 || this.activeContent?.contentType == 1"></app-image>
+
+        <app-video [title]="this.activeContent?.title ?? ''" class="preview" [src]="this.activeContent?.getURL" 
+            [yt]="isYoutube(this.activeContent?.contentType ?? 0)"
+            *ngIf="this.activeContent?.contentType == 2 || this.activeContent?.contentType == 7 || this.activeContent?.contentType == 8 
+                || this.activeContent?.contentType == 9 || this.activeContent?.contentType == 10"></app-video>
+
+        <app-model class="preview fa-xl" *ngIf="this.activeContent?.contentType == 4" style="display: block;height: 280px;"></app-model>
+    </div>
+
+    <div>
+        <div class="d-flex justify-content-between m-5">
+            <h1>{{this.classService.selected.title}}</h1>
+            <app-button (buttonClickEvent)="createRequest();" icon="add">Create Content</app-button>
+        </div>
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col"></div>
+                <div class="col"><b>Title</b></div>
+                <div class="col"><b>Content Type</b></div>
+                <div *ngIf="this.utilityService.isDevMode()" class="col"><b>Description</b></div>
+                <div *ngIf="this.utilityService.isDevMode()" class="col"><b>Stereoscopic</b></div>
+                <div *ngIf="this.utilityService.isDevMode()" class="col"><b>Format</b></div>
+                <div class="col"></div>
+            </div>
+            <div class="row d-flex justify-content-center" cdkDropList cdkDropListOrientation="vertical" (cdkDropListDropped)="drop($event)">
+                <div *ngFor="let content of this.contentService.collection; let contentIndex = index;" cdkDrag>
+                    <div class="selectable-row d-flex f align-self-center justify-content-center p-3" (click)="this.setActiveRow(content)"
+                        [ngClass]="this.isActive(content.id) ? 'content_table-column_active' : ''">
+                        <div class="cdk-placeholder col" *cdkDragPlaceholder></div>
+                        <div class="col">
+                            <span class="material-symbols-outlined">
+                                drag_handle
+                            </span>
+                        </div>
+                        <div class="col">
+                            {{content.title}}
+                        </div>
+                        <div class="col">
+                            {{contentService.getContentTypeById(content.contentType ?? -1)}}
+                        </div>
+                        <div *ngIf="this.utilityService.isDevMode()" class="col">
+                            {{content.description}}
+                        </div>
+                        <div *ngIf="this.utilityService.isDevMode()" class="col">
+                            {{content.isStereoscopic}}
+                        </div>
+                        <div *ngIf="this.utilityService.isDevMode()" class="col">
+                            {{content.contentFormatType}}
+                        </div>
+                        <div class="col">
+                            <app-edit-button class="m-3" (buttonClickEvent)="editContentRequest(content);"></app-edit-button>
+                            <app-delete-button class="m-3" (buttonClickEvent)="deleteRequest(content);"></app-delete-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!lessonService.selected || !contentService.collection || contentService.collection.length == 0"
+        class="no-content">
+        <p><i>{{this.navigation.noContentText}}</i></p>
+    </div>
+</div>

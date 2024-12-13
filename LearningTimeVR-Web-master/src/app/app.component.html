@@ -1,0 +1,13 @@
+<app-sidebar *ngIf="authService.loggedIn"></app-sidebar>
+<div id="wrapper">
+    <!-- <app-sidebar class="d-flex flex-column"></app-sidebar> -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <app-headerbar></app-headerbar>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+<app-login></app-login>
+<app-upload-queue></app-upload-queue>
+<app-build-indicator></app-build-indicator>

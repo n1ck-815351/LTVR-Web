@@ -1,0 +1,83 @@
+.button-primary_action, .button-primary_critical {
+    color: #000;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color ease-in-out .25s;
+}
+
+.button-primary_action:hover {
+    color: #4d4d4d;
+    cursor: pointer;
+}
+
+.button-primary_critical:hover {
+    cursor: pointer;
+    animation: button-primary_critical-flash 2s linear infinite;
+}
+
+@keyframes button-primary_critical-flash {
+    40% {
+      color: #DC1625;
+    }
+}
+
+.button-action_light {
+    display: inline-block; 
+    height: 2.65rem; 
+    padding: .5rem;
+    border-radius: 15px;
+    //background-color:#2d9bf0; 
+    background-color:#0855C3; 
+    color: white;
+    text-align: center;
+    //border-radius: 0 10px 10px 0;
+    transition: all ease-in-out .25s;
+    cursor: pointer;
+}
+
+.button-action_light:hover {
+    background-color: #288bd8;
+    background-color: #152FB7;
+    color: #fff;
+}
+
+/*
+.button-primary_action, .button-primary_critical {
+    color: #000;
+    cursor: pointer;
+    transition: color ease-in-out .25s;
+}
+
+.button-primary_action:hover {
+    color: #4e73df;
+    cursor: pointer;
+}
+
+.button-primary_critical:hover {
+    cursor: pointer;
+    animation: button-primary_critical-flash 2s linear infinite;
+}
+
+@keyframes button-primary_critical-flash {
+    15% {
+      color: red;
+    }
+    70% {
+        color: red;
+    }
+}
+
+.button-action_light {
+    display: inline-block; 
+    height: 2.65rem; 
+    background-color:#2d9bf0; 
+    border-radius: 0 10px 10px 0;
+    transition: all ease-in-out .25s;
+    cursor: pointer;
+}
+
+.button-action_light:hover {
+    background-color: #288bd8;
+    color: #fff;
+}
+*/

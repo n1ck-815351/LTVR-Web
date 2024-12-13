@@ -1,0 +1,63 @@
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<ul *ngIf="!this.isAnonymous && global.invalidUser == false" class="navbar-navsidebar sidebar-dark accordion" id="accordionSidebar" >
+    <div id="sidebarContainer" class=" bg-gradient-primary ">
+        <!-- <hr class="sidebar-divider my-0"> -->
+
+
+        <div id="navBtn-home" (click)="navigate_home()" class="btn btn-text sidebar-heading d-flex">
+            <span class="icon material-symbols-outlined">home</span>
+            <span>Home</span>
+        </div>
+        
+        <!-- <div id="navBtn-library" (click)="navigate_library()"
+            class="btn btn-text sidebar-heading d-flex">
+            <span class="icon material-symbols-outlined"><span class="material-symbols-outlined">
+                    library_books
+                </span></span>
+            <span>Library</span>
+        </div> -->
+        
+        <!-- <div id="navBtn-organization" (click)="navigate_organization()" class="btn btn-text sidebar-heading d-flex">
+            <span class="icon material-symbols-outlined"><span class="material-symbols-outlined">
+                    public
+                </span></span>
+            <span>My Organization</span>
+        </div> -->
+
+        <!-- <div id="navBtn-school" (click)="navigate_school()" class="btn btn-text sidebar-heading d-flex">
+            <span class="icon material-symbols-outlined"><span class="material-symbols-outlined">
+                    school
+                </span></span>
+            <span>My School</span>
+        </div>
+         -->
+        
+        <!-- || userService.user.baseUser!.userType == 2 || userService.user.baseUser!.userType == 3 -->
+        
+        <div id="navBtn-profile" (click)="navigate_profile()" class="btn btn-text sidebar-heading d-flex">
+            <span class="icon material-symbols-outlined"><span class="material-symbols-outlined">
+                    person
+                </span></span>
+            <span>Profile</span>
+        </div>
+
+        <div
+            *ngIf="userService.user && userService.user.baseUser!.userType == 3" id="navBtn-admin"
+            (click)="navigate_admin()" class="btn btn-text sidebar-heading d-flex">
+            <span class="icon material-symbols-outlined"><span class="material-symbols-outlined">
+                    admin_panel_settings
+                </span></span>
+            <span>Admin Panel</span>
+        </div>
+        <!-- <div 
+            /*ngIf="userService.user && userService.user.baseUser!.userType == 3" id="navBtn-users" (click)="navigate_users()"
+            class="btn btn-text sidebar-heading d-flex">
+            <span class="icon material-symbols-outlined"><span class="material-symbols-outlined">
+                    group
+                </span></span>
+            <span>Manage Users</span>
+        </div> -->
+    </div>
+</ul>

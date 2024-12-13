@@ -1,0 +1,44 @@
+<!-- Lesson Module Editor Modal -->
+<!-- <div class="modal fade" id="validationModal" tabindex="-1" aria-labelledby="validationModalLabel" aria-hidden="true"> -->
+<!-- <div class="modal-dialog modal-dialog-centered"> -->
+<div class="modal-content">
+    <form>
+        <div class="modal-header">
+            <h5 class="modal-title d-flex justify-content-between" id="validationModalLabel" style="width:100%;"
+                *ngIf="element != null">
+                Delete: {{element.title}}
+            </h5>
+            <h5 class="modal-title d-flex justify-content-between" id="validationModalLabel" style="width:100%;"
+                *ngIf="element == null">
+                Confirm
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div *ngIf="element == null">
+                Are you sure?
+            </div>
+            <div *ngIf="loading == false && element != null">
+                Are you sure you want to delete this {{nodeType}}?
+            </div>
+            <div *ngIf="loading == true" class="spinner-border mx-auto" role="status" style="text-align: center;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="col d-flex justify-content-between" style="width:100%;" *ngIf="loading == false">
+                <div *ngIf="element != null" class="nodeType">
+                    {{nodeType}}
+                </div>
+                <div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        (click)="CommitResults(false)">Cancel</button>
+                    <button type="submit" class="btn btn-danger" (click)="CommitResults(true)" data-bs-dismiss="modal"
+                        style="margin-left:5px;">Delete</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- </div> -->
+<!-- </div> -->

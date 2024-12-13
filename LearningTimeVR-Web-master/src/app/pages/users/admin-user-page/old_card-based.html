@@ -1,0 +1,47 @@
+<div class="container">
+    <h1 *ngIf="org">{{org.title}}</h1>
+    <!-- Search Bar -->
+    <div class="mb-3">
+        <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search" />
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="mb-3 ml-auto" style="width:10%;">
+        <label for="userFilter" class="form-label">Filter Users</label>
+        <!-- [(ngModel)]="selectedFilter" (change)="filterUsers(selectedFilter)" -->
+        <select class="form-select" id="userFilter">
+            <option>All</option>
+            <option>Admins</option>
+            <option>Mods</option>
+            <option>Teachers</option>
+            <option>Students</option>
+        </select>
+    </div>
+
+    <!-- User Grid -->
+    <div class="row">
+        <div class="col-6 col-md-4 col-lg-3" *ngFor="let user of userService.usersInOrganization">
+            <div class="card mb-3" style="padding:0;">
+                <!-- Display the user's profile photo -->
+                <img [src]="'https://api.readyplayer.me/v1/avatars/64519770151e836f98b9b313.png'" alt="Profile Photo"
+                    class="card-img-top" style="width:100%; height:auto;">
+                <div class="card-body" style="margin:0;padding:0;">
+                    <div style="padding:10px;">
+                        <h6 class="card-title">{{ user.baseUser?.displayName }}</h6>
+                        <p class="card-text">{{ user.baseUser?.title }}</p>
+                    </div>
+                    <div class="card-footer" style="margin:0; padding:0;">
+                        <style>
+                            .mybtn {
+                                text-decoration: none;
+                            }
+                        </style>
+                        <a class="mybtn material-symbols-outlined btn btn-link" (click)="editUser(user)">edit</a>
+                        <a class="mybtn material-symbols-outlined btn btn-link" (click)="deleteUser(user)"
+                            style="color: red;">delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

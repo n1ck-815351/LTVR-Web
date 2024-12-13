@@ -1,0 +1,36 @@
+@import url('../../../../../../style/styles.scss');
+
+.content_table-column {
+    margin: 10px;
+    height: 35px;
+    width: 25%;
+    max-width: 150px;
+    overflow:hidden; 
+    text-overflow:ellipsis; 
+    white-space: nowrap;
+    transition: all .25s ease-in-out;
+}
+
+.content_table-row {
+    display:flex; 
+    border-bottom: 1px solid gray; 
+    width: 95%; 
+    margin: auto; 
+    cursor: grab;
+    transition: all .25s ease-in-out;
+}
+
+.selectable-row:hover {
+    background: #e5f3fd //#e6e6e6;
+}
+
+.content_table-column_active {
+    background: #2d9bf0;
+    transition: all .25s ease-in-out;
+}
+
+.cdk-placeholder {
+    height: 70px; 
+    background: #e8e8e8; 
+    border: dotted 2px grey;
+  }

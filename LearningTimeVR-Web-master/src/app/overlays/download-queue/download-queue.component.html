@@ -1,0 +1,71 @@
+<div class="slide-out" id="downloadQueueWindow">
+    <!-- expand button -->
+    <li id="expandButton" (click)="toggleWindow();" style="min-height:50px;"
+        class="list-group-item align-items-center flex-grow-1 downloadListItem d-flex justify-content-between btn btn-outline-light customBtn">
+        <span *ngIf="toggled" class="material-symbols-outlined mx-auto">expand_more</span>
+        <span *ngIf="!toggled" class="material-symbols-outlined mx-auto">expand_less</span>
+        <span class="d-flex" style="position: absolute; left: 5px;"><span style="margin-left:5px;">uploads</span></span>
+
+        <span class="d-flex" style="position: absolute; right: 5px;"><span style="margin-right:5px;"><b
+                    *ngIf="uploadQueue.uploads.length > 0"
+                    style="color:rgba(0,0,255,.5)">{{uploadQueue.uploads.length}}</b></span><span style="color:blue;"
+                class="material-symbols-outlined pulse" id="cloudUploadIcon">cloud_upload</span></span>
+    </li>
+    <ul id="queueList" class="list-group d-flex" style="min-height:300px;">
+
+        <li style="padding:20px;" *ngIf="!uploadQueue.currentUpload && (!uploadQueue.uploads || uploadQueue.uploads.length == 0)" id="expandButton"
+            class="list-group-item align-items-center flex-grow-1 uploadListItem">
+            No files queued for upload.
+        </li>
+
+        <!-- <div class="spacerParent">
+            <div class="spacer mx-auto"></div>
+        </div> -->
+
+        <!-- current upload -->
+        
+        <!-- download entries -->
+        <li *ngFor="let _upload of uploadQueue.uploads"
+            class="list-group-item align-items-center flex-grow-1 uploadListItem">
+
+            <div class="uploadBody" [ngClass]="{'currentUploadContainer': _upload == uploadQueue.currentUpload}">
+                <p *ngIf="_upload == uploadQueue.currentUpload">Uploading...</p>
+                <p style="margin:0;padding:0;" *ngIf="_upload == uploadQueue.currentUpload">file: {{_upload.fileName}}
+                </p>
+                <p style="margin:0;padding:0;" *ngIf="_upload != uploadQueue.currentUpload">{{_upload.fileName}}</p>
+                
+                <div *ngIf="_upload == uploadQueue.currentUpload" class="d-flex align-items-center flex-grow-1 justify-content-between">
+                    <!-- Progress Bar -->
+                    <ngb-progressbar class="flex-grow-1" [value]="getProgress()"></ngb-progressbar>
+                    <!-- Cancel Button -->
+                    <div style="position: relative; width:1.5rem; height:1.5rem;" class="icon">
+                        <span (click)="cancelUpload(_upload)" class="material-symbols-outlined cancelupload">cancel</span>
+                    </div>
+                </div>
+
+                <!-- queued upload -->
+                <div *ngIf="_upload != uploadQueue.currentUpload"
+                    class="pendingUpload d-flex align-items-center flex-grow-1 justify-content-between">
+                    <!-- Progress Bar -->
+                    <ngb-progressbar
+                        class="progress-bar progress-bar-striped progress-bar-animated bg-warning flex-grow-1 p-2"
+                        [value]=20></ngb-progressbar>
+                    <!-- Cancel Button -->
+                    <div (click)="removeQueued(_upload)" style=" position: relative; width:1.5rem; height:1.5rem;"
+                        class="icon">
+                        <span class="material-symbols-outlined iconpending">pending</span>
+                        <span class="material-symbols-outlined iconcancel">cancel</span>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </li>
+
+
+
+
+    </ul>
+
+</div>

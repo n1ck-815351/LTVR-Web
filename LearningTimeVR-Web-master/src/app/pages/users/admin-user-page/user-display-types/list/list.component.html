@@ -1,0 +1,41 @@
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Display Name</th>
+                <th>Title</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr *ngFor="let user of users">
+                <td>
+                    <!-- Display the user's profile photo -->
+                    <img *ngIf="!user.baseUser?.avatarDataUrl" [src]="'https://api.readyplayer.me/v1/avatars/64519770151e836f98b9b313.png'" alt="Profile Photo" width="50" height="50" />
+                    <img *ngIf="user.baseUser?.avatarDataUrl" [src]="userService.parseAvatarUrl(user.baseUser?.avatarDataUrl!)" alt="Profile Photo" width="50" height="50" />
+                </td>
+                <td>{{ user.baseUser?.displayName }}</td>
+                <td>{{ user.baseUser?.title }}</td>
+                <td>{{ user.baseUser?.firstName }}</td>
+                <td>{{ user.baseUser?.lastName }}</td>
+                <td>
+                    <style>
+                        .mybtn {
+                            text-decoration: none;
+                        }
+                    </style>
+                    <span class="mybtn material-symbols-outlined btn btn-link" (click)="editUser(user)">
+                        edit
+                    </span>
+                    <span class="mybtn material-symbols-outlined btn btn-link" (click)="deleteUser(user)" style="color:red;">
+                        delete
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

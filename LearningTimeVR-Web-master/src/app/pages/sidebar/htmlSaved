@@ -1,0 +1,90 @@
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<ul class="navbar-navsidebar sidebar-dark accordion" id="accordionSidebar">
+    <div id="sidebarContainer" class=" bg-gradient-primary " style="height:100vh;">
+        <hr class="sidebar-divider my-0">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">Teacher Portal</a>
+        <hr class="sidebar-divider my-0">
+        <div class="sidebar-heading d-flex">Classes<a class="btn btn-link my-auto d-flex myBtn"
+                style="width:30px;height:30px; padding:0; text-decoration: none;" (click)="createClassRequest()"><span
+                    class="material-symbols-outlined my-auto mx-auto"
+                    style="text-align: center; vertical-align: middle;">add</span></a></div>
+
+
+        <cdk-virtual-scroll-viewport id="scroll-viewport" itemSize="firestoreService.classes.length"
+            style="height:100%;">
+            <div class="container-fluid d-flex row">
+                <style>
+                    .myBtn {
+                        color: white;
+                    }
+
+                    .myBtn :hover {
+                        color: rgba(0, 0, 0, .3);
+                    }
+                </style>
+                <div *ngIf="firestoreService.classes == null || firestoreService.classes == undefined || firestoreService.classes.length == 0"
+                    class="entry">
+                    There are no classes yet. Add one by clicking "Create."
+                </div>
+
+                <a class="btn btn-link myBtn"
+                    style="list-style: none; text-decoration: none; text-align: left; height:40px;"
+                    *ngFor="let class of firestoreService.classes; let i = index" (click)="selectClass(class)">
+                    <span class="myBtn" *ngIf="class == navigation.getSelectedClass()" style="color:rgba(255,255,255,1)">{{
+                        class.title }}</span>
+                    <span class="myBtn" *ngIf="class != navigation.getSelectedClass()"
+                        style="color:rgba(255,255,255,.5)">{{
+                        class.title }}</span>
+                    <hr class="sidebar-divider my-0" style="padding:0; margin:0;"
+                        *ngIf="class == navigation.getSelectedClass()">
+                </a>
+
+
+            </div>
+        </cdk-virtual-scroll-viewport>
+
+        <!-- <hr class="sidebar-divider my-0">
+
+    <div class="sidebar-heading">Navigation</div>
+
+    <li class="nav-item"><a class="nav-link" routerLink="/home"><i class="fas fa-fw fa-tachometer-alt"></i>
+            <div class="d-flex flex-row justify-content-between">
+                <div>Home</div>
+                <div class="material-symbols-outlined">home</div>
+            </div>
+        </a></li>
+
+    <hr class="sidebar-divider my-0">
+
+    <div class="sidebar-heading">Lesson Plans</div> -->
+
+        <!-- <li class="nav-item"><a class="nav-link" routerLink="/create"><i class="fas fa-fw fa-tachometer-alt"></i><div class="d-flex flex-row justify-content-between"><div>Create</div><div class="material-symbols-outlined">add_box</div></div></a></li> -->
+
+        <!-- <li class="nav-item"><a class="nav-link" routerLink="/classes"><i class="fas fa-fw fa-tachometer-alt"></i>
+            <div class="d-flex flex-row justify-content-between">
+                <div>Classes</div>
+                <div class="material-symbols-outlined">library_books</div>
+            </div>
+        </a></li>
+
+    <hr class="sidebar-divider my-0">
+
+    <div class="sidebar-heading">Account</div>
+
+    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-fw fa-tachometer-alt"></i>
+            <div class="d-flex flex-row justify-content-between">
+                <div>Profile</div>
+                <div class="material-symbols-outlined">person</div>
+            </div>
+        </a></li>
+
+    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-fw fa-tachometer-alt"></i>
+            <div class="d-flex flex-row justify-content-between">
+                <div>Manage</div>
+                <div class="material-symbols-outlined">settings</div>
+            </div>
+        </a></li> -->
+    </div>
+</ul>

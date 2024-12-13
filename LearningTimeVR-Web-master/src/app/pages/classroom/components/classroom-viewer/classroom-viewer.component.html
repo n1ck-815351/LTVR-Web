@@ -1,0 +1,70 @@
+<div *ngIf="!this.userService.isAnonymous()" class="app-container">
+
+    <app-breadcrumb [breadcrumbs]="this.crumbs" (currentPage)="this.classService.selected.title"></app-breadcrumb>
+
+    <div class="container">
+
+        <div *ngIf="this.utilityService.isDevMode()"
+            style="display: flex; align-self:center; text-align: center; justify-content:space-between;">
+            <!-- <div style="text-align:left !important;">
+                <p><b>{{this.navigation.viewerBoilerText.classViewer}}</b></p>
+            </div>
+             -->
+            <div>
+                <div class="input-group mb-3">
+                    <style>
+                        .confirmation_success-visible {
+                            transition: opacity .5s ease-in;
+                            opacity: 1;
+                        }
+
+                        .confirmation_success-hidden {
+                            transition: opacity 5s ease-out;
+                            opacity: 0;
+                        }
+                    </style>
+                    <div id="confirmation-message" class="confirmation_success-hidden"
+                        style="background-color: lightgreen; border-radius: 5px; border: solid 1px grey; margin: 5px; width: 100%;">
+                        <p style="color: green; margin-top: 10px;">Classroom successfully updated.</p>
+                    </div>
+
+                    <app-input class="m-2" placeholderLabel="Title" placeholder="Provide a classroom title" [defaultValue]="this.classService.selected.title"></app-input>
+                    <app-input class="m-2" placeholderLabel="Description" placeholder="Provide a classroom description" [defaultValue]="this.classService.selected.description"></app-input>
+                    
+                    <!-- <div class="input-group-prepend">
+                        <span class="input-group-text">Description</span>
+                    </div>
+                    <textarea class="form-control" style="width: 100%;" name="description"
+                        [(ngModel)]="this.classService.selected.description" aria-label="With textarea"></textarea> -->
+
+                    <div style="display: flex; justify-content: space-around; width: 100%;">
+                        <app-button class="m-4" (buttonClickEvent)="createSubjectRequest()" icon="add">Add Subject</app-button>
+                        <app-button class="m-4" (buttonClickEvent)="openStudentManager()" icon="manage">Manage Students</app-button>
+                        <app-button class="m-4" (buttonClickEvent)="updateClass()" icon="update">Update</app-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-start">
+            <div *ngFor="let subject of this.subjectService.subjectsCollection; let i = index" class="col-4" style="max-width:300px;">
+                <app-content-card
+                    [title]=subject.title
+                    [description]="subject.description"
+                    [displayElementControls]="true"
+                    [orgId]="this.classService.selected.organizationId"
+                    (actionClickEvent)="this.selectSubject(subject, true);"
+                    (editClickEvent)="editSubjectRequest(subject);"
+                    (deleteClickEvent)="deleteSubjectRequest(subject);">
+                </app-content-card>
+            </div>
+        </div>
+    </div> 
+
+    <div *ngIf="!this.subjectService.subjectsCollection || this.subjectService.subjectsCollection?.length == 0"
+        class="no-content">
+        {{this.navigation.noContentText}}
+    </div>
+</div>

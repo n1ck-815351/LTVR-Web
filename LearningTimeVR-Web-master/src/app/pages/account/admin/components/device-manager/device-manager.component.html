@@ -1,0 +1,152 @@
+<nav>
+    <div class="nav nav-tabs" id="myTab" role="tablist">
+        <button class="nav-link active" id="create-tab" data-bs-toggle="tab" data-bs-target="#create" type="button"
+            role="tab" aria-controls="create" aria-selected="true">Upload</button>
+        <button class="nav-link" id="manage-tab" data-bs-toggle="tab" data-bs-target="#manage" type="button" role="tab"
+            aria-controls="manage" aria-selected="false" (click)="getDevicesInSelectedOrg();">Manage</button>
+    </div>
+    <div class="tab-content" id="myTabContent">
+        <!-- create devices -->
+        <div class="tab-pane fade show active" id="create" role="tabpanel" aria-labelledby="create-tab">
+            <form [formGroup]="form">
+                <div class="input-group my-1">
+                    <label class="input-group-text" for="orgSelect">Organization</label>
+                    <select (change)="orgChanged($event)" class="form-select" formControlName="organizationSelect">
+                        <option id="orgSelect" *ngFor="let org of orgService.collection" [value]="org.id">
+                            {{org.title}}</option>
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <input (change)="fileChanged($event);" type="file" accept=".csv" class="form-control" id="inputGroupFile02">
+                    <label class="input-group-text" for="inputGroupFile02">CSV</label>
+                </div>
+            </form>
+            <div *ngIf="!loading && !showResults && deviceCSV && deviceCSV.devices && deviceCSV.devices.length > 0"
+                class="alert alert-primary" style="margin:auto;width:60%;margin-top:50px;">
+                <h4>Confirm</h4>
+                <p>If the data below looks correct, click save to upload the data to the database using the selected
+                    Organization.
+                </p>
+                <span class="btn btn-primary" (click)="pushDevicesToDB();">Save</span>
+            </div>
+
+            <div *ngIf="loading && !showResults" class="alert alert-info"
+                style="margin:auto;width:60%;margin-top:50px;">
+                <h4>Loading</h4>
+                <p>Saving your devices to the database.</p>
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            <div *ngIf="showResults">
+                <div *ngIf="!loading && !warning && !fail" class="alert alert-success"
+                    style="margin:auto;width:60%;margin-top:50px;">
+                    <h4>Success</h4>
+                    <p>{{results}}</p>
+                </div>
+                <div *ngIf="!loading && warning && !fail" class="alert alert-warning"
+                    style="margin:auto;width:60%;margin-top:50px;">
+                    <h4>Success, but...</h4>
+                    <p>{{results}}</p>
+                </div>
+                <div *ngIf="!loading && fail" class="alert alert-danger" style="margin:auto;width:60%;margin-top:50px;">
+                    <h4>Failed</h4>
+                    <p>{{results}}</p>
+                </div>
+                <button class="btn btn-primary" (click)="ContinueBtn()">Continue</button>
+            </div>
+
+            <div *ngIf="deviceCSV && deviceCSV.devices" class="card position-relative"
+                style="min-height:100px;margin-top:50px;">
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Device Group</th>
+                            <th>Serial Number</th>
+                            <th>Firmware Version</th>
+                            <th>Android Version</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let device of deviceCSV.devices; trackBy: trackByDeviceSN; let i = index;">
+                            <td>{{ i }}</td>
+                            <td>{{ device.DeviceID }}</td>
+                            <td>{{ device.Name }}</td>
+                            <td>{{ device.DeviceGroup }}</td>
+                            <td>{{ device.SerialNumber }}</td>
+                            <td>{{ device.FirmwareVersion }}</td>
+                            <td>{{ device.AndroidVersion }}</td>
+                            <td>{{ device.CreatedAt }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- manage devices -->
+        <div class="tab-pane fade" id="manage" role="tabpanel" aria-labelledby="manage-tab">
+            <form [formGroup]="form">
+                <div class="input-group my-1">
+                    <label class="input-group-text" for="orgSelect">Organization</label>
+                    <select (change)="orgChanged($event)" class="form-select" formControlName="organizationSelect">
+                        <option id="orgSelect" *ngFor="let org of orgService.collection" [value]="org.id">
+                            {{org.title}}
+                        </option>
+                    </select>
+                </div>
+            </form>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <span class="btn btn-primary btn-sm " (click)="moveAllToOrganization()"><span
+                        class="material-symbols-outlined">captive_portal</span> <span>Move All</span></span>
+                <span class="btn btn-primary btn-sm " (click)="removeAllDevices()"><span
+                        class="material-symbols-outlined">delete</span> <span>Delete All</span></span>
+
+            </div>
+
+            <div *ngIf="manageDevicesArray && manageDevicesArray.length > 0" class="card position-relative" style="min-height:100px;margin-top:50px;">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Device Group</th>
+                            <th>Serial Number</th>
+                            <th>Firmware Version</th>
+                            <th>Android Version</th>
+                            <th>Created At</th>
+                            <th>Actions</th> <!-- Added column for actions -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let device of manageDevicesArray; trackBy: trackByDeviceSN; let i = index;">
+                            <td>{{ i }}</td>
+                            <td>{{ device.DeviceID }}</td>
+                            <td>{{ device.Name }}</td>
+                            <td>{{ device.DeviceGroup }}</td>
+                            <td>{{ device.SerialNumber }}</td>
+                            <td>{{ device.FirmwareVersion }}</td>
+                            <td>{{ device.AndroidVersion }}</td>
+                            <td>{{ device.CreatedAt }}</td>
+                            <td>
+                                <span class="btn btn-link btn-sm " (click)="moveToOrganization(device)"><span
+                                        class="material-symbols-outlined">captive_portal</span> <span>Move</span></span>
+                                <span class="btn btn-link btn-sm " (click)="deleteDevice(device)"><span
+                                        class="material-symbols-outlined">delete</span> <span>Delete</span></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div *ngIf="!manageDevicesArray || manageDevicesArray.length <= 0" class="card card-primary" style="padding:10px;margin:50px;">
+                <i>There are no devices in this organization.</i>
+            </div>
+        </div>
+
+    </div>
+</nav>

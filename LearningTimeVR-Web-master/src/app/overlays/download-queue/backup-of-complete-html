@@ -1,0 +1,102 @@
+<li *ngIf="uploadQueue.failedUploads.length > 0 || uploadQueue.finishedUploads.length > 0"
+            class="list-group-item align-items-center flex-grow-1 uploadListItem"
+            style="text-align: center; background-color:rgb(83, 81, 102);color:white;">Finished</li>
+        <li *ngIf="uploadQueue.failedUploads.length > 0 || uploadQueue.finishedUploads.length > 0"
+            class="list-group-item align-items-center flex-grow-1 uploadListItem btn btn-primary"
+            style="border-radius:0;" (click)="clearFinished();">Clear Finished</li>
+        <li *ngFor="let _upload of uploadQueue.failedUploads"
+            class="list-group-item align-items-center flex-grow-1 uploadListItem">
+
+            <div class="uploadBody" [ngClass]="{'currentUploadContainer': _upload == uploadQueue.currentUpload}">
+
+                <p style="margin:0;padding:0;">failed upload: {{_upload.fileName}}</p>
+
+                <!-- finished upload -->
+                <div class="pendingUpload d-flex align-items-center flex-grow-1 justify-content-between">
+                    <!-- Progress Bar -->
+                    <ngb-progressbar class="progress-bar progress-bar progress-bar bg-danger flex-grow-1 p-2"
+                        [value]=20></ngb-progressbar>
+                    <div style="position: relative; width:1.5rem; height:1.5rem;" class="icon">
+                        <span (click)="removeFinished(_upload)"
+                            class="material-symbols-outlined cancelupload">cancel</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </li>
+        <li *ngFor="let _upload of uploadQueue.finishedUploads"
+            class="list-group-item align-items-center flex-grow-1 uploadListItem">
+
+            <div class="uploadBody" [ngClass]="{'currentUploadContainer': _upload == uploadQueue.currentUpload}">
+
+                <p style="margin:0;padding:0;">completed: {{_upload.fileName}}</p>
+
+                <!-- finished upload -->
+                <div class="pendingUpload d-flex align-items-center flex-grow-1 justify-content-between">
+                    <!-- Progress Bar -->
+                    <ngb-progressbar class="progress-bar progress-bar progress-bar bg-success flex-grow-1 p-2"
+                        [value]=20></ngb-progressbar>
+                    <div style="position: relative; width:1.5rem; height:1.5rem;" class="icon">
+                        <span (click)="removeFinished(_upload)"
+                            class="material-symbols-outlined cancelupload">cancel</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <!-- current upload -->
+        <div *ngIf="_upload == uploadQueue.currentUpload" class="d-flex align-items-center flex-grow-1 justify-content-between">
+            <!-- Progress Bar -->
+            <ngb-progressbar class="flex-grow-1" [value]="getProgress()"></ngb-progressbar>
+            <!-- Cancel Button -->
+            <div style="position: relative; width:1.5rem; height:1.5rem;" class="icon">
+                <span (click)="cancelUpload(_upload)" class="material-symbols-outlined cancelupload">cancel</span>
+            </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <li *ngIf="uploadQueue.currentUpload" class="list-group-item align-items-center flex-grow-1 uploadListItem">
+        
+            <div class="uploadBody" [ngClass]="{'currentUploadContainer': uploadQueue.currentUpload}">
+                <p>Uploading...</p>
+                <p style="margin:0;padding:0;">file: {{uploadQueue.currentUpload.fileName}}
+                </p>
+            </div>
+        
+            <!-- current upload -->
+            <div class="d-flex align-items-center flex-grow-1 justify-content-between">
+                <!-- Progress Bar -->
+                <ngb-progressbar class="flex-grow-1" [value]="getProgress()"></ngb-progressbar>
+                <!-- Cancel Button -->
+                <div style="position: relative; width:1.5rem; height:1.5rem;" class="icon">
+                    <span (click)="cancelUpload(uploadQueue.currentUpload)"
+                        class="material-symbols-outlined cancelupload">cancel</span>
+                </div>
+            </div>
+        </li>

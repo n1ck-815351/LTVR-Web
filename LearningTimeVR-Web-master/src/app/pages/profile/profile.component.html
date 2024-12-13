@@ -1,0 +1,129 @@
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Avatar Image -->
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Profile Picture</h5>
+                    <div *ngIf="userService.user && userService.user.baseUser && userService.user.baseUser?.avatarDataUrl"
+                        class="rounded-circle overflow-hidden border border-secondary mb-3">
+                        <img class="card-img-top" id="rpm" width="150"
+                            [src]="userService.user.baseUser!.avatarDataUrl!.replace('.glb', '.png')">
+                    </div>
+                    <span class="btn btn-link" style="text-decoration:none;" (click)="changeAvatarBtn()">Change Avatar<span class="material-symbols-outlined">
+                        settings
+                    </span></span>
+                    
+
+                    <div
+                        *ngIf="userService.user && userService.user.baseUser && !userService.user.baseUser?.avatarDataUrl">
+                        <i>Profile picture couldn't be loaded.</i>
+                        <b>{{userService.user.baseUser!.avatarDataUrl}}</b>
+                    </div>
+                    <style>#logoutBtn:hover{cursor: pointer;}</style>
+                    <div class="list-group" role="tablist">
+                        <a data-bs-toggle="list" href="#about-me" role="tab" aria-controls="about-me"
+                            class="list-group-item list-group-item-action active">
+                            About Me
+                        </a>
+                        <a (click)="logout()" id="logoutBtn" class="list-group-item list-group-item-action">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8" style="height:60vh;">
+            <ng-container *ngIf="!showRpmCreator; else rpmCreatorTemplate">
+                <!-- Account Info -->
+                <h2 class="mb-4">Account Information</h2>
+                <div *ngIf="userService.user != null && userService.user.baseUser != null"
+                    (click)="copyToClipboard(userService.user.baseUser!.pin!)" class="align-items-center d-flex"
+                    style="margin-bottom:10px;">
+                    <b style="margin-right:5px;">Login PIN:</b>
+                    <!-- <div class="btn btn-link" style="text-decoration:none;"> -->
+                    <span class="btn btn-link"
+                        style="text-decoration:none; margin:0; padding:0;">{{pinService.formatCode(userService.user.baseUser!.pin!)}}</span>
+                    <span class="material-symbols-outlined btn btn-link"
+                        style="text-decoration:none; margin:0; padding:0;">content_copy</span>
+                    <!-- </div> -->
+
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Title</h5>
+                        <p *ngIf="userService.user != null && userService.user.baseUser != null" class="card-text">
+                            {{UserTypes[userService.user.baseUser!.userType!]}}</p>
+                    </div>
+                </div>
+
+
+
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Display Name</h5>
+                        <p *ngIf="userService.user != null && userService.user.baseUser != null" class="card-text">
+                            {{userService.user.baseUser!.displayName!}}</p>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Name</h5>
+                        <p *ngIf="userService.user != null && userService.user.baseUser != null" class="card-text">
+                            {{userService.user.baseUser!.firstName!}} {{userService.user.baseUser!.lastName!}}</p>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Email</h5>
+                        <p *ngIf="userService.fbUser != null" class="card-text">{{userService.fbUser.email}}</p>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+
+                </div>
+                <!-- <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Email</h5>
+                                    <p *ngIf="userService.fbUser != null" class="card-text">{{userService.fbUser.email}}</p>
+                                </div>
+                            </div> -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Organization</h5>
+                        <p *ngIf="userService.organization != null" class="card-text">{{userService.organization.title}}
+                        </p>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">School Affiliation</h5>
+                        <p *ngIf="userService.school != null" class="card-text">{{userService.school.title}}</p>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-template style="height:100%;" #rpmCreatorTemplate>
+                <div class="rpm" style="height:100%;">
+                    <app-rpm-creator (rpmEmitter)="onRpmData($event)" style="height:100%;"></app-rpm-creator>
+                    <div class="row">
+                        <button class="btn btn-outline-primary col" (click)="cancel()"
+                            style="margin-right:5px;">Cancel</button>
+                        <button class="btn btn-primary col" [disabled]="!canSave()" (click)="save();"
+                            style="margin-left:5px;">Save</button>
+                    </div>
+
+                </div>
+                <!-- <style>
+                    #readyPlayerMeFrame {
+                        width: 100%;
+                        height: 100%;
+                    }
+                </style>
+                <div class="rpm" style="height:100%;">
+                    <iframe class="rpm-iframe" id="readyPlayerMeFrame" class="frame"
+                        allow="autoplay;fullscreen camera *; microphone *; clipboard-write"></iframe>
+                    <div class="input-group">
+                        <span class="btn btn-primary" *ngIf="canSave" (click)="save();">Save</span>
+
+                        <span class="btn btn-primary" (click)="cancel()" style="margin-top:10px;">Cancel</span>
+                    </div>
+                </div> -->
+            </ng-template>
+
+        </div>
+    </div>
+</div>

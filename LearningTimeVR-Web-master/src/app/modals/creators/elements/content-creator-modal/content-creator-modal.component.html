@@ -1,0 +1,120 @@
+<!-- Add to this base creator modal -->
+<form [formGroup]="contentFormGroup">
+    url valid: {{contentFormGroup.controls['urlField'].valid}} <br/>
+    fileInput valid: {{contentFormGroup.controls['inputFile'].valid}}<br />
+    fileUploadMethod valid: {{contentFormGroup.controls['fileUploadMethod'].valid}}<br />
+    contentType valid: {{contentFormGroup.controls['contentType'].valid}}<br />
+    isStereo valid: {{contentFormGroup.controls['isStereo'].valid}}
+    <!-- Media Metadata -->
+    <div class="input-group d-flex">
+        <!-- Content Type -->
+        <div *ngIf="showContentType" class="input-group cformInput">
+            <label id="typeLabel" class="input-group-text">Media Type</label>
+            <select (change)="onTypeChange()" formControlName="contentType" class="form-select"
+                aria-describedby="typeLabel">
+                <option *ngFor="let type of fbRequestService._contentTypes; let i = index;" [attr.value]="i">
+                    <span *ngIf="processTypeName(type).toLowerCase().includes('unimplemented') == false">{{
+                        processTypeName(type) }}</span>
+                    <span *ngIf="processTypeName(type).toLowerCase().includes('unimplemented') == true">{{
+                        processTypeName(type) }}</span>
+                </option>
+            </select>
+        </div>
+
+        <!-- Youtube Metadata -->
+        <div *ngIf="selectedType != null && processTypeName(selectedType).toLowerCase().includes('youtube')"
+            class="input-group" style="margin-bottom:5px;">
+            <div class="input-group d-flex">
+
+                <!-- Format Type -->
+                <div style="margin-left:10px;">
+                    <label id="typeLabel" class="" style="margin-right:5px;">Format Type:</label>
+                    <select (change)="updateBooleans()" formControlName="videoFormat" class="form-select-sm"
+                        aria-describedby="typeLabel">
+                        <option value=0 selected>
+                            <span> Flat </span>
+                        </option>
+                        <option value=1>
+                            <span> 360 </span>
+                        </option>
+                        <option value=2>
+                            <span> 180 </span>
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Stereoscopic -->
+                <div *ngIf="is360" class="form-check d-flex" style="margin-left:10px;">
+                    <input (change)="updateBooleans()" formControlName="isStereo" class="form-check-input"
+                        type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" style="margin-left:5px;" for="flexCheckDefault">
+                        Stereoscopic
+                    </label>
+                    <!-- Removed stereo 3D Layout option from web app -->
+                    <!-- <div *ngIf="isStereo" style="margin-left:10px;">
+                                    <select (change)="onStereoLayoutChange()" formControlName="stereoLayout"
+                                        class="form-select-sm" aria-describedby="typeLabel">
+                                        <option value=0 selected>
+                                            <span> Over Under </span>
+                                        </option>
+                                        <option value=1>
+                                            <span> Side by Side </span>
+                                        </option>
+                                        <option value=2>
+                                            <span> Quad </span>
+                                        </option>
+                                    </select>
+                                </div> -->
+                </div>
+            </div>
+
+        </div>
+
+        <div class="secondary-spacer mx-auto"></div>
+
+        <!-- File upload or URL -->
+        <div *ngIf="showFileUploadField" class="input-group cformInput">
+            <label class="input-group-text" id="typeLabel">Method</label>
+            <select (change)="onMethodChange()" formControlName="fileUploadMethod" aria-describedby="typeLabel"
+                class="form-select">
+                <!-- <option value=0 *ngIf="modalType.toLowerCase() == 'update' && isURLContentType == false" selected>Upload</option>
+                <option value=1 *ngIf="modalType.toLowerCase() == 'update' isURLContentType">URL</option> -->
+                <option value=0 *ngIf="isURLContentType == false" selected>Upload</option>
+                <option value=1>URL</option>
+            </select>
+            <!-- fileIsUploaded == false -->
+        </div>
+
+
+
+        <div class="secondary-spacer mx-auto"></div>
+
+        <style>
+            .cformInput {
+                margin-bottom: 5px;
+            }
+        </style>
+        <!-- {{contentFormGroup.controls['fileUploadMethod'].value}} -->
+        <!-- URL -->
+        <div *ngIf="contentFormGroup.controls['fileUploadMethod'].value == 1" class="input-group cformInput" id="cURL">
+            <span class="input-group-text" id="span_geturl">URL</span>
+            <input formControlName="urlField" id="cInput_GetURL" type="text" class="form-control"
+                placeholder="https://youtube.com/?video" name="cInput_GetURL" aria-describedby="span_geturl">
+        </div>
+        
+        
+        <!-- Upload -->
+        <div *ngIf="contentFormGroup.controls['fileUploadMethod'].value == 0 && showFileUploadField" class="input-group cformInput row"
+            style="padding:0;">
+            <div class="input-group">
+                <input (change)="onFileSelected($event)" formControlName="inputFile" type="file" class="form-control"
+                    id="input_fileToUpload" name="input_fileToUpload" [(ngModel)]="this.selectedFile">
+                <!-- <button [disabled]="(fileIsUploaded == false && (selectedFile == null || selectedFile == undefined))"
+                class="form-control" (click)="upload()" class="btn btn-success">Upload</button> -->
+            </div>
+
+            <!-- Progress Bar -->
+            <!-- <p style="margin-top:5px;"><ngb-progressbar *ngIf="uploading" [value]="getProgress()"></ngb-progressbar></p> -->
+        </div>
+    </div>
+</form>

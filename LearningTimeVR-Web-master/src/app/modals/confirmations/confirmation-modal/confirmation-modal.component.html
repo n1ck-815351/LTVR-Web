@@ -1,0 +1,41 @@
+<div class="modal-content">
+    <form>
+        <div class="modal-header">
+            <h5 class="modal-title d-flex justify-content-between" id="validationModalLabel" style="width:100%;"
+                *ngIf="this.title">
+                Delete: {{this.title}}
+            </h5>
+            <h5 class="modal-title d-flex justify-content-between" id="validationModalLabel" style="width:100%;"
+                *ngIf="this.id">
+                Confirm
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="this.close()"></button>
+        </div>
+        <div class="modal-body">
+            <!-- <div *ngIf="element == null">
+                Are you sure?
+            </div> -->
+            <div *ngIf="this.title">
+                Are you sure you want to delete <b>"{{this.title}}"?</b>
+                <br>
+                This action CANNOT be undone.
+            </div>
+            <!-- <div *ngIf="loading == true" class="spinner-border mx-auto" role="status" style="text-align: center;">
+                <span class="visually-hidden">Loading...</span>
+            </div> -->
+        </div>
+        <div class="modal-footer">
+            <div class="col d-flex justify-content-between" style="width:100%;">
+                <!-- <div *ngIf="element != null" class="nodeType">
+                    {{nodeType}}
+                </div> -->
+                <div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        (click)="this.close()">Cancel</button>
+                    <button type="submit" class="btn btn-danger" (click)="this.confirm()" data-bs-dismiss="modal"
+                        style="margin-left:5px;">Delete</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

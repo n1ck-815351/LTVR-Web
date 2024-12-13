@@ -1,0 +1,35 @@
+<div *ngIf="!this.userService.isAnonymous()" class="app-container">
+ 
+    <app-breadcrumb [breadcrumbs]="this.crumbs" [currentPage]="this.subjectService.selected.title"></app-breadcrumb>
+
+    <div id="header-hero">
+        <div style="display:block;">
+        </div>
+        <div style="display: flex; align-self:center; text-align: center; justify-content:space-between;">
+            
+            <app-button (buttonClickEvent)="createLessonRequest()" icon="add">Add Lesson</app-button>
+            
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-start">
+            <div *ngFor="let lesson of this.lessonService.collection; let i = index" class="col-4" style="max-width:300px;">
+                <app-content-card
+                    [title]=lesson.title
+                    [description]="lesson.description"
+                    [displayElementControls]="true"
+                    [orgId]="this.classService.selected.organizationId"
+                    (actionClickEvent)="this.selectLesson(lesson, true);"
+                    (editClickEvent)="editLessonRequest(lesson);"
+                    (deleteClickEvent)="deleteLessonRequest(lesson);">
+                </app-content-card>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!this.lessonService.collection || this.lessonService.collection?.length == 0"
+        class="no-content">
+        {{this.navigation.noContentText}}
+    </div>
+</div>

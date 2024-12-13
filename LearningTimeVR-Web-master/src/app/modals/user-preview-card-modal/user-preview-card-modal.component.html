@@ -1,0 +1,31 @@
+<!-- Modal -->
+<div class="modal-content">
+    <div class="modal-header">
+        <h3 class="card-title">{{ user.baseUser?.firstName }} {{ user.baseUser?.lastName}}</h3>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+    </div>
+    <div class="modal-body">
+        <img *ngIf="user && user.baseUser?.avatarDataUrl"
+            [src]="userService.parseAvatarUrl(user.baseUser?.avatarDataUrl!)" alt="Profile Photo"
+            class="card-img-top rounded-circle" style="width:100%; height:auto;">
+        <img *ngIf="!user || !user.baseUser?.avatarDataUrl"
+            [src]="'https://api.readyplayer.me/v1/avatars/64519770151e836f98b9b313.png'" alt="Profile Photo"
+            class="card-img-top rounded-circle" style="width:100%; height:auto;">
+        <div style="padding:10px;">
+            <!-- <p class="card-text">{{ user.baseUser?.title }}</p> -->
+            <h5 class="modal-title" id="previewModalLabel">{{ user.baseUser?.displayName }}</h5>
+        </div>
+    </div>
+    <div class="modal-footer d-flex justify-content-between">
+        <style>
+            .myBtn {
+                text-decoration: none;
+            }
+        </style>
+        <span>{{user.baseUser?.title}}</span>
+        <span>
+            <a class="myBtn btn btn-link material-symbols-outlined" (click)="editUser(user)">edit</a>
+            <a class="myBtn btn btn-link text-danger material-symbols-outlined" (click)="deleteUser(user)">delete</a>
+        </span>
+    </div>
+</div>

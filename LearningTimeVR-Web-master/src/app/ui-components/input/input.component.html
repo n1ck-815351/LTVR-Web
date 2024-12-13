@@ -1,0 +1,4 @@
+<mat-form-field class="input-component">
+    <mat-label>{{this.placeholderLabel}}</mat-label>
+    <input matInput placeholder="{{this.placeholder}}" [(ngModel)]="this.defaultValue" (ngModelChange)="onChange()">
+</mat-form-field>

@@ -1,0 +1,64 @@
+<div class="modal-content">
+    <form id="classCreatorForm" [formGroup]="form" class="needs-validated">
+        <!-- Header-->
+        <div class="modal-header">
+            <!-- Title -->
+            <h5 class="modal-title d-flex justify-content-between" id="validationModalLabel" style="width:100%;">
+                {{modalType}}
+                <!-- Create Class -->
+            </h5>
+            <!-- Close Button -->
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="this.close()"></button>
+        </div>
+
+        <!-- Body -->
+        <div class="modal-body">
+
+            <!-- Input -->
+            <div class="input-group row mx-auto">
+                <style>
+                    .forminput {
+                        margin: auto;
+                        margin-top: 0;
+                        margin-bottom: 5px;
+                    }
+                </style>
+                
+                <!-- Basic -->
+                <div class="input-group forminput">
+                    <span class="input-group-text" id="fortitle">* Title</span>
+                    <input [(ngModel)]="this.data.title" autofocus class="form-control" formControlName="title" placeholder="Title"
+                        aria-describedby="fortitle" required>
+                </div>
+                <div *ngIf="title?.errors && title?.dirty">
+                    <i>You must provide a title.</i>
+                </div>
+                <div class="input-group forminput">
+                    <span class="input-group-text" id="fordescription">* Description</span>
+                    <input [(ngModel)]="this.data.description" class="form-control" formControlName="description" placeholder="Description"
+                        aria-describedby="fordescription" required>
+                </div>
+                
+                <div *ngIf="description?.errors && description?.dirty">
+                    <i>You must provide a description.</i> 
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col d-flex justify-content-between" style="width:100%;">
+                    <div class="nodeType">
+                        Class
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            (click)="this.close()">Cancel</button>
+                        <button type="submit" [disabled]="!this.canSave()" class="btn btn-success" (click)="this.save()"
+                            data-bs-dismiss="modal" style="margin-left:5px;">
+                            {{modalType == 'Create' ? 'Create' : 'Update'}}
+                            <!-- Create -->
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

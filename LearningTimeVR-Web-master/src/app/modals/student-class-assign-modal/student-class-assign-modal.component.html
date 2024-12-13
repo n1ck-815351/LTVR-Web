@@ -1,0 +1,34 @@
+<!-- <div class="card"> -->
+<div class="row" style="margin:10px;height:400px;">
+    <div class="col-md-5">
+        <h6>Add Students</h6>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search students">
+        </div>
+        <select style="height:80%;" multiple class="form-control" [(ngModel)]="selectedAvailableStudents"
+            *ngIf="availableStudents && availableStudents.length > 0">
+            <option *ngFor="let student of availableStudents" [value]="student.id">{{ student.baseUser.firstName }} {{
+                student.baseUser.lastName }}</option>
+        </select>
+    </div>
+    <div class="col-md-2 text-center align-content-center" style="margin-top:auto;margin-bottom:auto;">
+        <div class="d-grid gap-2">
+            <button class="btn btn-outline-primary mt-2" (click)="addStudent()">Add >></button>
+            <button class="btn btn-outline-primary mt-2" (click)="removeStudent()">
+                << Remove</button>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <h6>Students in Class</h6>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search students">
+        </div>
+        <select style="height:80%;" multiple class="form-control" [(ngModel)]="selectedStudentsInClass">
+            <option *ngFor="let student of studentsInClass" [value]="student.id">{{ student.baseUser.firstName }} {{
+                student.baseUser.lastName }}</option>
+        </select>
+    </div>
+</div>
+<div class="col m-3 d-flex">
+    <button class="btn btn-primary" style="margin-left:auto; width:30%;">Save</button>
+</div>

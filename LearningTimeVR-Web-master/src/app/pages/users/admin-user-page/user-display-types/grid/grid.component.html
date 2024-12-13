@@ -1,0 +1,49 @@
+<!-- User Grid -->
+<style>
+    .myBtn:hover {
+        cursor: pointer;
+    }
+
+    .img-thumbnail:hover {
+        border-width: 1px;
+        border-color: black;
+    }
+</style>
+<div class="myBtn d-flex flex-column align-items-center" (click)="showModal();">
+    <div class="position-relative" [style.width]="size + 'px'" [style.height]="size + 'px'" [style.margin-bottom]="'10px'">
+        <img *ngIf="!user.baseUser?.avatarDataUrl"
+            [src]="'https://api.readyplayer.me/v1/avatars/64519770151e836f98b9b313.png'" alt="Profile Photo" width=`${size}`
+            height=`${size}` class="img-thumbnail rounded-circle" />
+        <img *ngIf="user.baseUser?.avatarDataUrl"
+            [src]="userService.parseAvatarUrl(user.baseUser?.avatarDataUrl!)" alt="Profile Photo" width=`${size}`
+            height=`${size}` class="img-thumbnail rounded-circle" />
+            
+        <span class="position-absolute" style="bottom: -10px; right: -10px;">
+
+            <span class="icon_lower_right material-symbols-outlined" *ngIf="user?.baseUser?.userType! == 3"
+                style="color: white; background-color: blue; border: solid 1px black; border-radius: 5px;">
+                shield_person
+            </span>
+            <span class="icon_lower_right material-symbols-outlined" *ngIf="user?.baseUser?.userType! == 2"
+                style="color: white; background-color: green; border: solid 1px black; border-radius: 5px;">
+                handyman
+            </span>
+            <span class="icon_lower_right material-symbols-outlined" *ngIf="user?.baseUser?.userType! == 1"
+                style="color: white; background-color: teal; border: solid 1px black; border-radius: 5px;">
+                school
+            </span>
+            <span class="icon_lower_right material-symbols-outlined" *ngIf="user?.baseUser?.userType! == 0"
+                style="color: white; background-color: #515151; border: solid 1px black; border-radius: 5px;">
+                person
+            </span>
+        </span>
+    </div>
+    <div class="text-center">
+        <table>
+            <tr class="h6">{{ user.baseUser?.displayName }}</tr>
+            <tr><small>({{ user.baseUser?.firstName }} {{ user.baseUser?.lastName }})</small></tr>
+        </table>
+        <p class="h6"></p>
+
+    </div>
+</div>

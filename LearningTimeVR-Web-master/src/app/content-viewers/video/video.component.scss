@@ -1,0 +1,21 @@
+video {
+    max-width: 500px;
+    height: auto;
+    margin: auto;
+    padding: 0;
+}
+.previewImg {
+    width: 100%;
+    height: auto;
+    margin: auto;
+    padding: 0;
+}
+
+.previewImg:hover {
+    cursor: pointer;
+}
+
+.mybackdrop{
+    background-color: rgba(0,0,0,0);
+    visibility: none;
+}

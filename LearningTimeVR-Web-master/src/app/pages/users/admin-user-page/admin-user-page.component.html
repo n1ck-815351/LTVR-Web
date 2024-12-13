@@ -1,0 +1,75 @@
+<div class="mb-3 d-flex ml-auto">
+
+
+
+    <!-- User View Buttons -->
+    <style>
+        .myBtn {
+            text-decoration: none;
+        }
+
+        .myBtn:hover {
+            cursor: pointer;
+        }
+    </style>
+    <ul class="nav nav-tabs" style="margin-right:5px;">
+        <li class="nav-item myBtn">
+            <a class="nav-link" [class.active]="global.adminPage_activeUserView === 'list'"
+                (click)="global.adminPage_activeUserView = 'list'">
+                <span class="material-symbols-outlined">view_list</span>
+            </a>
+        </li>
+        <li class="nav-item myBtn">
+            <a class="nav-link" [class.active]="global.adminPage_activeUserView === 'grid'"
+                (click)="global.adminPage_activeUserView = 'grid'">
+                <span class="material-symbols-outlined">apps</span>
+            </a>
+        </li>
+        <li class="nav-item myBtn">
+            <a class="nav-link" [class.active]="global.adminPage_activeUserView === 'expandedGrid'"
+                (click)="global.adminPage_activeUserView = 'expandedGrid'">
+                <span class="material-symbols-outlined">grid_view</span>
+            </a>
+        </li>
+    </ul>
+
+    <!-- Filter Buttons -->
+    <div class="input-group" style="width:20%; text-align: center; vertical-align: middle; height:100%;">
+        <label for="userFilter" class="input-group-text">Filter</label>
+        <select class="form-select" id="userFilter" [(ngModel)]="userFilter">
+            <option value=-1>All</option>
+            <option *ngIf="userService.user?.baseUser?.userType! >= 3" value=3>Admins</option>
+            <option *ngIf="userService.user?.baseUser?.userType! > 2" value=2>Mods</option>
+            <option *ngIf="userService.user?.baseUser?.userType! > 1" value=1>Teachers</option>
+            <option *ngIf="userService.user?.baseUser?.userType! > 0" value=0>Students</option>
+        </select>
+    </div>
+</div>
+<!-- Search Bar -->
+<div class="mb-3">
+    <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search" />
+</div>
+<!-- User View -->
+<div class="container" *ngIf="global.adminPage_activeUserView === 'grid'">
+    <!-- User Grid -->
+    <div class="row row-cols-auto">
+        <div class="col" *ngFor="let user of getFilteredList()" style="width:100px;">
+            <app-user-grid [user]="user"></app-user-grid>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="global.adminPage_activeUserView === 'expandedGrid'">
+    <!-- User Expanded Grid -->
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-4" *ngFor="let user of getFilteredList()">
+            <app-user-expanded-grid [user]="user"></app-user-expanded-grid>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="global.adminPage_activeUserView === 'list'">
+    <!-- User List -->
+    <app-user-list [users]="getFilteredList()"></app-user-list>
+
+</div>

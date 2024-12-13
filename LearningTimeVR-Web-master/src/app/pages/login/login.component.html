@@ -1,0 +1,65 @@
+<!-- <button type="button" class="btn btn-primary" (click)="CheckStatus()">Check Status</button> -->
+<div class="modal fade" aria-labelledby="loginModal" id="loginModal" aria-hidden="true" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" *ngIf="authService.loggedIn == true" style="padding-bottom:10px;">
+            <div class="modal-header">
+                <h5 class="modal-title">Account</h5>
+            </div>
+            <div class="loginf mx-auto">Welcome </div>
+            <div style="width:90%;" class="justify-content-between d-flex mx-auto">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Email</span>
+                </div>
+                <!-- <input name="userAccountEmail" #email type="text" class="form-control" value={{authService.authState.email}}
+                    placeholder="e.g. johndoe@gmail.com" aria-label="name" aria-describedby=""> -->
+                <div class="input-group">
+                    {{authService.authState.email}}
+                </div>
+                <button type="button" class="btn btn-primary" (click)="Logout()" data-bs-toggle="modal"
+                            data-bs-target="#loginModal">Logout</button>
+            </div>
+        </div>
+        <form name="loginForm" class="modal-content" *ngIf="!authService.loggedIn">
+            <div class="modal-header">
+                <h5 class="modal-title">Login</h5>
+            </div>
+            <div class="loginform mx-auto">
+                <div class="d-flex flex-column mx-auto my-auto">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Email</span>
+                        </div>
+                        <input name="userEmail" #email [(ngModel)]="userEmail" type="text" class="form-control"
+                            placeholder="e.g. johndoe@gmail.com" aria-label="name" aria-describedby="">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Password</span>
+                        </div>
+                        <input name="userPassword" #password [(ngModel)]="userPassword" type="password"
+                            class="form-control" placeholder="password" aria-label="password" aria-describedby="">
+                    </div>
+                    <!-- <div class="input-group mb-3">
+                        <button style="width:100%;" type="button" class="btn btn-primary" submit="#">Login</button>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="justify-content-between d-flex" style="width:95%;">
+                    <div class="d-flex">
+                        <button type="button" class="btn btn-primary" (click)="LoginWithGoogle()">Login with
+                            Google</button>
+                    </div>
+                    <div class="d-flex">
+                        <button type="submit" class="btn btn-primary" (click)="LoginWithEmailPassword()">Login</button>
+                        <button type="button" class="btn btn-primary"
+                            (click)="SignupWithEmailPassword()">Register</button>
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                            data-bs-target="#loginModal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
